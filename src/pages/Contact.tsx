@@ -71,7 +71,7 @@ const Contact = () => {
   ];
 
   return (
-    <div className="min-h-screen py-20">
+    <div className="min-h-screen py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       {/* Hero Section */}
       <section className="px-4 sm:px-6 lg:px-8 mb-20">
         <div className="max-w-7xl mx-auto text-center">
@@ -79,7 +79,7 @@ const Contact = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
+            className="text-4xl lg:text-5xl font-bold text-white mb-6"
           >
             Contact <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">Us</span>
           </motion.h1>
@@ -87,7 +87,7 @@ const Contact = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
+            className="text-xl text-gray-300 max-w-3xl mx-auto"
           >
             Ready to start your final year project or have questions about our services? 
             Get in touch with our expert team today.
@@ -104,9 +104,9 @@ const Contact = () => {
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="bg-white rounded-2xl p-8 shadow-lg"
+              className="bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-700"
             >
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
+              <h2 className="text-2xl font-bold text-white mb-6">Send us a Message</h2>
               
               <form 
                 action="https://formspree.io/f/xqallddd"
@@ -115,7 +115,7 @@ const Contact = () => {
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                       Full Name *
                     </label>
                     <input
@@ -125,13 +125,13 @@ const Contact = () => {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400"
                       placeholder="Your full name"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                       Email Address *
                     </label>
                     <input
@@ -141,7 +141,7 @@ const Contact = () => {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400"
                       placeholder="your.email@example.com"
                     />
                   </div>
@@ -149,7 +149,7 @@ const Contact = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">
                       Phone Number
                     </label>
                     <input
@@ -158,13 +158,13 @@ const Contact = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400"
                       placeholder="+91 9292929444"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="university" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="university" className="block text-sm font-medium text-gray-300 mb-2">
                       University
                     </label>
                     <input
@@ -173,7 +173,7 @@ const Contact = () => {
                       name="university"
                       value={formData.university}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400"
                       placeholder="Your university name"
                     />
                   </div>
@@ -181,7 +181,7 @@ const Contact = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="year" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="year" className="block text-sm font-medium text-gray-300 mb-2">
                       Academic Year
                     </label>
                     <select
@@ -189,7 +189,7 @@ const Contact = () => {
                       name="year"
                       value={formData.year}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="">Select year</option>
                       <option value="final-year">Final Year</option>
@@ -199,7 +199,7 @@ const Contact = () => {
                   </div>
                   
                   <div>
-                    <label htmlFor="serviceType" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="serviceType" className="block text-sm font-medium text-gray-300 mb-2">
                       Service Interested In
                     </label>
                     <select
@@ -207,7 +207,7 @@ const Contact = () => {
                       name="serviceType"
                       value={formData.serviceType}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="">Select service</option>
                       {serviceTypes.map((service, index) => (
@@ -218,7 +218,7 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
                     Subject *
                   </label>
                   <input
@@ -228,13 +228,13 @@ const Contact = () => {
                     required
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400"
                     placeholder="Brief subject of your inquiry"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
                     Message *
                   </label>
                   <textarea
@@ -244,7 +244,7 @@ const Contact = () => {
                     rows={5}
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400"
                     placeholder="Please describe your project requirements, timeline, and any specific questions you have..."
                   ></textarea>
                 </div>
@@ -267,8 +267,8 @@ const Contact = () => {
               className="space-y-8"
             >
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
-                <p className="text-gray-600 mb-8">
+                <h2 className="text-2xl font-bold text-white mb-6">Get in Touch</h2>
+                <p className="text-gray-300 mb-8">
                   We're here to help you succeed. Choose the most convenient way to reach us, 
                   and we'll respond promptly to your inquiry.
                 </p>
@@ -276,17 +276,17 @@ const Contact = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {contactInfo.map((info, index) => (
-                  <div key={index} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <div key={index} className="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-700">
                     <div className="flex items-center mb-4">
-                      <div className="text-blue-600 mr-3">{info.icon}</div>
-                      <h3 className="text-lg font-semibold text-gray-900">{info.title}</h3>
+                      <div className="text-blue-400 mr-3">{info.icon}</div>
+                      <h3 className="text-lg font-semibold text-white">{info.title}</h3>
                     </div>
                     <div className="space-y-1 mb-4">
                       {info.details.map((detail, detailIndex) => (
-                        <p key={detailIndex} className="text-gray-600">{detail}</p>
+                        <p key={detailIndex} className="text-gray-300">{detail}</p>
                       ))}
                     </div>
-                    <button className="text-blue-600 font-medium hover:text-blue-800 transition-colors">
+                    <button className="text-blue-400 font-medium hover:text-blue-300 transition-colors">
                       {info.action}
                     </button>
                   </div>
@@ -294,43 +294,43 @@ const Contact = () => {
               </div>
 
               {/* Office Hours */}
-              <div className="bg-gradient-to-br from-blue-50 to-orange-50 rounded-xl p-6">
+              <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl p-6 border border-gray-600">
                 <div className="flex items-center mb-4">
-                  <Clock className="w-6 h-6 text-blue-600 mr-3" />
-                  <h3 className="text-lg font-semibold text-gray-900">Working Hours</h3>
+                  <Clock className="w-6 h-6 text-blue-400 mr-3" />
+                  <h3 className="text-lg font-semibold text-white">Working Hours</h3>
                 </div>
                 <div className="space-y-2">
                   {officeHours.map((schedule, index) => (
                     <div key={index} className="flex justify-between">
-                      <span className="text-gray-700">{schedule.day}</span>
-                      <span className="text-gray-600">{schedule.hours}</span>
+                      <span className="text-gray-300">{schedule.day}</span>
+                      <span className="text-gray-400">{schedule.hours}</span>
                     </div>
                   ))}
                 </div>
-                <p className="text-sm text-gray-600 mt-4">
+                <p className="text-sm text-gray-400 mt-4">
                   Emergency support available 24/7 for ongoing projects
                 </p>
               </div>
 
               {/* Quick Stats */}
-              <div className="bg-white rounded-xl p-6 shadow-lg">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Why Students Choose Us</h3>
+              <div className="bg-gray-900 rounded-xl p-6 shadow-lg border border-gray-700">
+                <h3 className="text-lg font-semibold text-white mb-4">Why Students Choose Us</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600 mb-1">24hrs</div>
-                    <div className="text-sm text-gray-600">Response Time</div>
+                    <div className="text-2xl font-bold text-blue-400 mb-1">24hrs</div>
+                    <div className="text-sm text-gray-400">Response Time</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-orange-600 mb-1">500+</div>
-                    <div className="text-sm text-gray-600">Projects Completed</div>
+                    <div className="text-2xl font-bold text-orange-400 mb-1">500+</div>
+                    <div className="text-sm text-gray-400">Projects Completed</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-green-600 mb-1">95%</div>
-                    <div className="text-sm text-gray-600">Success Rate</div>
+                    <div className="text-2xl font-bold text-green-400 mb-1">95%</div>
+                    <div className="text-sm text-gray-400">Success Rate</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-purple-600 mb-1">50+</div>
-                    <div className="text-sm text-gray-600">Universities</div>
+                    <div className="text-2xl font-bold text-purple-400 mb-1">50+</div>
+                    <div className="text-sm text-gray-400">Universities</div>
                   </div>
                 </div>
               </div>
@@ -346,29 +346,29 @@ const Contact = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="bg-gray-200 rounded-2xl h-64 flex items-center justify-center"
+            className="bg-gray-800 border border-gray-700 rounded-2xl h-64 flex items-center justify-center"
           >
             <div className="text-center">
-              <MapPin className="w-12 h-12 text-gray-500 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-700 mb-2">Our Location</h3>
-              <p className="text-gray-600">Vijayawada, Andhra Pradesh, India</p>
+              <MapPin className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-white mb-2">Our Location</h3>
+              <p className="text-gray-300">Vijayawada, Andhra Pradesh, India</p>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* FAQ Link */}
-      <section className="px-4 sm:px-6 lg:px-8 bg-gray-50 py-16">
+      <section className="px-4 sm:px-6 lg:px-8 bg-gray-800 py-16">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
               Have Questions?
             </h2>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-gray-300 mb-8">
               Check out our comprehensive FAQ section for quick answers to common questions 
               about our services, process, and pricing.
             </p>

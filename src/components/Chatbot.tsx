@@ -83,15 +83,15 @@ const ChatbotWidget = () => {
       {open && (
         <div className="fixed bottom-24 right-6 z-[100] transition-opacity duration-300">
           <div
-            className="relative w-80 max-w-full h-[70vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden"
+            className="relative w-80 max-w-full h-[70vh] bg-gray-900 border border-gray-700 rounded-3xl shadow-2xl flex flex-col overflow-hidden"
             style={{ transformOrigin: "bottom right" }}
           >
             {/* Chatbot Header */}
-            <div className="p-6 pb-4 bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col items-center justify-center rounded-t-3xl relative">
+            <div className="p-6 pb-4 bg-gradient-to-br from-gray-800 to-gray-700 flex flex-col items-center justify-center rounded-t-3xl relative border-b border-gray-600">
               {/* Close Button */}
               <button
                 onClick={() => setOpen(false)}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors duration-200 p-2 rounded-full hover:bg-gray-100"
+                className="absolute top-4 right-4 text-gray-400 hover:text-gray-200 transition-colors duration-200 p-2 rounded-full hover:bg-gray-600"
                 aria-label="Close chatbot"
               >
                 <X size={24} />
@@ -102,23 +102,23 @@ const ChatbotWidget = () => {
                 alt="AI Chatbot Assistant"
                 className="w-32 h-32 rounded-full object-cover shadow-lg border-4 border-white mb-4"
               />
-              <h2 className="text-2xl font-bold text-blue-800 mb-2">Your AI Companion</h2>
-              <p className="text-gray-600 text-center text-sm">How can I assist you today?</p>
+              <h2 className="text-2xl font-bold text-white mb-2">Your AI Companion</h2>
+              <p className="text-gray-300 text-center text-sm">How can I assist you today?</p>
               {/* Clear Chat Button */}
               <button
                 onClick={clearChat}
-                className="absolute top-4 left-4 text-gray-500 hover:text-red-500 transition-colors duration-200 p-2 rounded-full hover:bg-gray-100"
+                className="absolute top-4 left-4 text-gray-400 hover:text-red-400 transition-colors duration-200 p-2 rounded-full hover:bg-gray-600"
                 aria-label="Clear chat"
               >
                 <Trash2 size={24} />
               </button>
             </div>
             {/* Chat Messages Display Area */}
-            <div className="flex-1 p-6 overflow-y-auto space-y-4 custom-scrollbar bg-gray-50">
+            <div className="flex-1 p-6 overflow-y-auto space-y-4 custom-scrollbar bg-gray-800">
               <div className="flex justify-start">
-                <div className="relative bg-blue-100 text-blue-900 p-4 rounded-2xl max-w-[80%] shadow-md animate-fade-in-left">
+                <div className="relative bg-gray-700 text-gray-200 p-4 rounded-2xl max-w-[80%] shadow-md animate-fade-in-left">
                   Hi there! 👋 Need a boost?
-                  <div className="absolute left-3 -bottom-2 w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-blue-100 transform rotate-45"></div>
+                  <div className="absolute left-3 -bottom-2 w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-gray-700 transform rotate-45"></div>
                 </div>
               </div>
               {messages.slice(1).map((msg, i) => (
@@ -129,7 +129,7 @@ const ChatbotWidget = () => {
                   <div
                     className={`text-sm p-3 rounded-xl max-w-[75%] shadow-sm transform transition-all duration-300 ease-out ${
                       msg.from === "bot"
-                        ? "bg-white text-gray-800 rounded-bl-none animate-fade-in-left"
+                        ? "bg-gray-700 text-gray-200 rounded-bl-none animate-fade-in-left"
                         : "bg-blue-600 text-white rounded-br-none animate-fade-in-right"
                     }`}
                     style={{ animationDelay: `${i * 0.05}s` }}
@@ -140,7 +140,7 @@ const ChatbotWidget = () => {
               ))}
               {isTyping && (
                 <div className="flex justify-start">
-                  <div className="bg-gray-100 text-gray-700 text-sm p-3 rounded-xl rounded-bl-none animate-pulse">
+                  <div className="bg-gray-700 text-gray-300 text-sm p-3 rounded-xl rounded-bl-none animate-pulse">
                     Typing...
                   </div>
                 </div>
@@ -148,13 +148,13 @@ const ChatbotWidget = () => {
               {/* FAQ Options (only show if last message is from bot and it's the welcome message) */}
               {showFaqOptions && (
                 <div className="mt-4">
-                  <div className="font-semibold mb-2 text-gray-700">Popular Questions:</div>
+                  <div className="font-semibold mb-2 text-gray-300">Popular Questions:</div>
                   <div className="flex flex-col gap-2">
                     {faqs.map((faq, idx) => (
                       <button
                         key={idx}
                         onClick={() => handleSend(faq.q)}
-                        className="text-left bg-white border border-blue-200 rounded-lg px-4 py-2 text-blue-700 hover:bg-blue-50 transition-colors"
+                        className="text-left bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-gray-200 hover:bg-gray-600 transition-colors"
                       >
                         {faq.q}
                       </button>
@@ -165,9 +165,9 @@ const ChatbotWidget = () => {
               <div ref={messagesEndRef} />
             </div>
             {/* Message Input Area */}
-            <div className="p-4 border-t border-gray-100 flex items-center bg-white shadow-inner">
+            <div className="p-4 border-t border-gray-600 flex items-center bg-gray-900 shadow-inner">
               <input
-                className="flex-1 border border-gray-300 rounded-full px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 placeholder-gray-500"
+                className="flex-1 border border-gray-600 bg-gray-700 text-white rounded-full px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 placeholder-gray-400"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
@@ -195,15 +195,15 @@ const ChatbotWidget = () => {
           width: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-          background: #f1f1f1;
+          background: #374151;
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #cbd5e0;
+          background: #6b7280;
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #a0aec0;
+          background: #9ca3af;
         }
         @keyframes fade-in-left {
           from { opacity: 0; transform: translateX(-10px);}

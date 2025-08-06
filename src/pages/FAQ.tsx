@@ -128,7 +128,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="min-h-screen py-20">
+    <div className="min-h-screen py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       {/* Hero Section */}
       <section className="px-4 sm:px-6 lg:px-8 mb-20">
         <div className="max-w-7xl mx-auto text-center">
@@ -136,7 +136,7 @@ const FAQ = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
+            className="text-4xl lg:text-5xl font-bold text-white mb-6"
           >
             Frequently Asked <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">Questions</span>
           </motion.h1>
@@ -144,7 +144,7 @@ const FAQ = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
+              className="bg-gray-900 rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-shadow duration-300 border border-gray-700"
           >
             Find answers to common questions about our services, process, and how we can help 
             you succeed in your final year CS project and research publication journey.
@@ -163,7 +163,7 @@ const FAQ = () => {
               transition={{ duration: 0.8, delay: categoryIndex * 0.1 }}
               className="mb-12"
             >
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b-2 border-blue-600">
+              <h2 className="text-2xl font-bold text-white mb-6 pb-2 border-b-2 border-blue-400">
                 {category.category}
               </h2>
               
@@ -173,19 +173,19 @@ const FAQ = () => {
                   return (
                     <div
                       key={faqIndex}
-                      className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden"
+                      className="bg-gray-800 rounded-xl shadow-lg border border-gray-700 overflow-hidden"
                     >
                       <button
                         onClick={() => toggleFAQ(globalIndex)}
-                        className="w-full px-6 py-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors duration-200"
+                        className="w-full px-6 py-6 text-left flex justify-between items-center hover:bg-gray-700 transition-colors duration-200"
                       >
-                        <h3 className="text-lg font-semibold text-gray-900 pr-4">
+                        <h3 className="text-lg font-semibold text-white pr-4">
                           {faq.question}
                         </h3>
                         {openFAQ === globalIndex ? (
-                          <ChevronUp className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                          <ChevronUp className="w-5 h-5 text-blue-400 flex-shrink-0" />
                         ) : (
-                          <ChevronDown className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                          <ChevronDown className="w-5 h-5 text-gray-500 flex-shrink-0" />
                         )}
                       </button>
                       
@@ -197,8 +197,8 @@ const FAQ = () => {
                           transition={{ duration: 0.3 }}
                           className="px-6 pb-6"
                         >
-                          <div className="pt-4 border-t border-gray-200">
-                            <p className="text-gray-600 leading-relaxed">
+                          <div className="pt-4 border-t border-gray-600">
+                            <p className="text-gray-300 leading-relaxed">
                               {faq.answer}
                             </p>
                           </div>
@@ -214,7 +214,7 @@ const FAQ = () => {
       </section>
 
       {/* Quick Help Section */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-gray-50 py-16">
+      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-gray-800 py-16">
         <div className="max-w-7xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -222,8 +222,8 @@ const FAQ = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Need Quick Help?</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Need Quick Help?</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Choose the best way to get in touch with our team for immediate assistance.
             </p>
           </motion.div>
@@ -233,16 +233,16 @@ const FAQ = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="bg-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-shadow duration-300"
+              className="bg-gray-900 rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-shadow duration-300 border border-gray-700"
             >
-              <div className="bg-blue-100 p-4 rounded-full w-16 h-16 mx-auto mb-4">
-                <MessageCircle className="w-8 h-8 text-blue-600" />
+              <div className="bg-blue-900/50 p-4 rounded-full w-16 h-16 mx-auto mb-4">
+                <MessageCircle className="w-8 h-8 text-blue-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Live Chat</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-semibold text-white mb-3">Live Chat</h3>
+              <p className="text-gray-300 mb-4">
                 Get instant answers to your questions through our live chat support.
               </p>
-              <button className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors">
+              <button className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-500 transition-colors">
                 Start Chat
               </button>
             </motion.div>
@@ -253,16 +253,16 @@ const FAQ = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="bg-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-shadow duration-300"
             >
-              <div className="bg-orange-100 p-4 rounded-full w-16 h-16 mx-auto mb-4">
-                <Mail className="w-8 h-8 text-orange-600" />
+              <div className="bg-orange-900/50 p-4 rounded-full w-16 h-16 mx-auto mb-4">
+                <Mail className="w-8 h-8 text-orange-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Email Support</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-semibold text-white mb-3">Email Support</h3>
+              <p className="text-gray-300 mb-4">
                 Send us detailed questions and get comprehensive responses within 24 hours.
               </p>
               <a
                 href="mailto:support@startupco.com"
-                className="bg-orange-600 text-white px-6 py-2 rounded-full hover:bg-orange-700 transition-colors"
+                className="bg-orange-600 text-white px-6 py-2 rounded-full hover:bg-orange-500 transition-colors"
               >
                 Send Email
               </a>
@@ -272,18 +272,18 @@ const FAQ = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="bg-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-shadow duration-300"
+              className="bg-gray-900 rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-shadow duration-300 border border-gray-700"
             >
-              <div className="bg-green-100 p-4 rounded-full w-16 h-16 mx-auto mb-4">
-                <Phone className="w-8 h-8 text-green-600" />
+              <div className="bg-green-900/50 p-4 rounded-full w-16 h-16 mx-auto mb-4">
+                <Phone className="w-8 h-8 text-green-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Phone Consultation</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-semibold text-white mb-3">Phone Consultation</h3>
+              <p className="text-gray-300 mb-4">
                 Schedule a phone call with our experts for personalized guidance.
               </p>
               <Link
                 to="/contact"
-                className="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition-colors"
+                className="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-500 transition-colors"
               >
                 Schedule Call
               </Link>

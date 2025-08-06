@@ -19,7 +19,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white/80 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-50">
+    <header className="bg-gray-900/95 backdrop-blur-md border-b border-gray-700/50 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
@@ -38,10 +38,10 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`text-sm font-medium transition-colors duration-200 hover:text-blue-600 ${
+                className={`text-sm font-medium transition-colors duration-200 hover:text-blue-400 ${
                   location.pathname === item.path
-                    ? 'text-blue-600'
-                    : 'text-gray-700'
+                    ? 'text-blue-400'
+                    : 'text-gray-300'
                 }`}
               >
                 {item.name}
@@ -65,9 +65,9 @@ const Header = () => {
             className="lg:hidden p-2"
           >
             {isMenuOpen ? (
-              <X className="w-6 h-6 text-gray-700" />
+              <X className="w-6 h-6 text-gray-300" />
             ) : (
-              <Menu className="w-6 h-6 text-gray-700" />
+              <Menu className="w-6 h-6 text-gray-300" />
             )}
           </button>
         </div>
@@ -78,7 +78,7 @@ const Header = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="lg:hidden py-4 border-t border-gray-200"
+            className="lg:hidden py-4 border-t border-gray-700"
           >
             <nav className="flex flex-col space-y-4">
               {navigation.map((item) => (
@@ -86,10 +86,10 @@ const Header = () => {
                   key={item.name}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`text-sm font-medium transition-colors duration-200 hover:text-blue-600 ${
+                  className={`text-sm font-medium transition-colors duration-200 hover:text-blue-400 ${
                     location.pathname === item.path
-                      ? 'text-blue-600'
-                      : 'text-gray-700'
+                      ? 'text-blue-400'
+                      : 'text-gray-300'
                   }`}
                 >
                   {item.name}

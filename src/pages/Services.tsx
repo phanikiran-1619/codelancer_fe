@@ -105,7 +105,7 @@ const Services = () => {
   ];
 
   return (
-    <div className="min-h-screen py-20">
+    <div className="min-h-screen py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       {/* Hero Section */}
       <section className="px-4 sm:px-6 lg:px-8 mb-20">
         <div className="max-w-7xl mx-auto text-center">
@@ -113,7 +113,7 @@ const Services = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
+            className="text-4xl lg:text-5xl font-bold text-white mb-6"
           >
             Our <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">Services</span>
           </motion.h1>
@@ -121,7 +121,7 @@ const Services = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
+            className="text-xl text-gray-300 max-w-3xl mx-auto"
           >
             Comprehensive support for every aspect of your final year CS project, 
             from initial concept to successful publication and beyond.
@@ -145,37 +145,37 @@ const Services = () => {
               >
                 <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
                   <div className="flex items-center mb-6">
-                    <div className="text-blue-600 mr-4">{service.icon}</div>
-                    <h2 className="text-3xl font-bold text-gray-900">{service.title}</h2>
+                    <div className="text-blue-400 mr-4">{service.icon}</div>
+                    <h2 className="text-3xl font-bold text-white">{service.title}</h2>
                   </div>
                   
-                  <p className="text-lg text-gray-600 mb-8">{service.description}</p>
+                  <p className="text-lg text-gray-300 mb-8">{service.description}</p>
                   
                   <div className="space-y-3 mb-8">
                     {service.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-center space-x-3">
                         <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                        <span className="text-gray-700">{feature}</span>
+                        <span className="text-gray-300">{feature}</span>
                       </div>
                     ))}
                   </div>
 
                   <div className="flex flex-wrap gap-3">
                     {service.technologies.map((tech, techIndex) => (
-                      <div key={techIndex} className="flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded-full">
-                        <div className="w-4 h-4 text-gray-600">{tech.icon}</div>
-                        <span className="text-sm font-medium text-gray-700">{tech.name}</span>
+                      <div key={techIndex} className="flex items-center space-x-2 bg-gray-700 px-4 py-2 rounded-full">
+                        <div className="w-4 h-4 text-gray-300">{tech.icon}</div>
+                        <span className="text-sm font-medium text-gray-300">{tech.name}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div className={index % 2 === 1 ? 'lg:col-start-1' : ''}>
-                  <div className="bg-gradient-to-br from-blue-50 to-orange-50 rounded-2xl p-8 h-80 flex items-center justify-center">
+                  <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 h-80 flex items-center justify-center border border-gray-600">
                     <div className="text-center">
-                      <div className="text-blue-600 mb-4 flex justify-center">{service.icon}</div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{service.title}</h3>
-                      <p className="text-gray-600">Professional-grade solutions</p>
+                      <div className="text-blue-400 mb-4 flex justify-center">{service.icon}</div>
+                      <h3 className="text-xl font-semibold text-white mb-2">{service.title}</h3>
+                      <p className="text-gray-300">Professional-grade solutions</p>
                     </div>
                   </div>
                 </div>
@@ -186,7 +186,7 @@ const Services = () => {
       </section>
 
       {/* Additional Services */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-gray-50 py-16">
+      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-gray-800 py-16">
         <div className="max-w-7xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -194,8 +194,8 @@ const Services = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Additional Services</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Additional Services</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Complementary services to ensure your complete technical success.
             </p>
           </motion.div>
@@ -207,11 +207,11 @@ const Services = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-700"
               >
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="w-6 h-6 text-green-500" />
-                  <h3 className="text-lg font-semibold text-gray-900">{service}</h3>
+                  <h3 className="text-lg font-semibold text-white">{service}</h3>
                 </div>
               </motion.div>
             ))}
@@ -228,8 +228,8 @@ const Services = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Our Service Process</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Our Service Process</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               A structured approach ensuring quality delivery and student satisfaction.
             </p>
           </motion.div>
@@ -262,8 +262,8 @@ const Services = () => {
                 <div className="bg-gradient-to-r from-blue-600 to-orange-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
                   {step.step}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">{step.title}</h3>
-                <p className="text-gray-600">{step.description}</p>
+                <h3 className="text-xl font-semibold text-white mb-3">{step.title}</h3>
+                <p className="text-gray-300">{step.description}</p>
               </motion.div>
             ))}
           </div>
