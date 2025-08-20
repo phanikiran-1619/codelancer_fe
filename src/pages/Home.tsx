@@ -9,8 +9,10 @@ import {
   ArrowRight, 
   Zap,  
   Rocket,
-  CheckCircle
+  CheckCircle,
+  Sparkles
 } from 'lucide-react';
+import DotsPattern from '../components/DotsPattern';
 
 const Home = () => {
   const services = [
@@ -42,27 +44,58 @@ const Home = () => {
     { number: "95%", label: "Success Rate" },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center">
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white">
+        <DotsPattern 
+          dotColor="#e5e7eb" 
+          dotSize={2} 
+          spacing={35} 
+          opacity={0.5}
+          className="absolute inset-0"
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-center"
+          >
             <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6"
+              variants={itemVariants}
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
             >
-              All the <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">CS Innovation</span><br />
+              All the <span className="text-black border-b-4 border-gray-300">CS Innovation</span><br />
               Power under the Sun
             </motion.h1>
             
             <motion.p 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto"
+              variants={itemVariants}
+              className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed"
             >
               Empower your final year with cutting-edge project development, comprehensive 
               technical documentation, and research paper publishing support. Transform your 
@@ -70,47 +103,85 @@ const Home = () => {
             </motion.p>
 
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              variants={itemVariants}
               className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
-              <Link
-                to="/register"
-                className="bg-gradient-to-r from-blue-600 to-orange-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2"
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <span>Start Your Journey</span>
-                <Rocket className="w-5 h-5" />
-              </Link>
-              <Link
-                to="/how-it-works"
-                className="border-2 border-gray-600 text-gray-300 px-8 py-4 rounded-full text-lg font-semibold hover:border-blue-400 hover:text-blue-400 transition-all duration-300 flex items-center space-x-2"
+                <Link
+                  to="/register"
+                  className="bg-black text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-300 flex items-center space-x-2 border-2 border-transparent hover:border-gray-300"
+                >
+                  <span>Start Your Journey</span>
+                  <Rocket className="w-5 h-5" />
+                </Link>
+              </motion.div>
+              
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <span>How It Works</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
+                <Link
+                  to="/how-it-works"
+                  className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-full text-lg font-semibold hover:border-black hover:text-black hover:shadow-lg transition-all duration-300 flex items-center space-x-2"
+                >
+                  <span>How It Works</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </motion.div>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-blue-500 rounded-full opacity-10 animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-32 h-32 bg-orange-500 rounded-full opacity-10 animate-pulse"></div>
+        <motion.div 
+          className="absolute top-20 left-10 w-20 h-20 bg-gray-200 rounded-full opacity-30"
+          animate={{ 
+            y: [0, -20, 0],
+            rotate: [0, 180, 360]
+          }}
+          transition={{ 
+            duration: 6, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-10 w-32 h-32 bg-gray-300 rounded-full opacity-20"
+          animate={{ 
+            y: [0, 30, 0],
+            x: [0, -10, 0]
+          }}
+          transition={{ 
+            duration: 8, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
       </section>
 
       {/* Services Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 relative">
+        <DotsPattern 
+          dotColor="#d1d5db" 
+          dotSize={1.5} 
+          spacing={45} 
+          opacity={0.4}
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
               Comprehensive Support for Your Final Year Projects
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               From innovative project development to research paper publishing, 
               we provide end-to-end support for your Project success.
             </p>
@@ -123,11 +194,15 @@ const Home = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-gray-700"
+                whileHover={{ 
+                  y: -5,
+                  boxShadow: "0 10px 40px rgba(0, 0, 0, 0.1)"
+                }}
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
               >
-                <div className="text-blue-400 mb-4">{service.icon}</div>
-                <h3 className="text-xl font-semibold text-white mb-3">{service.title}</h3>
-                <p className="text-gray-300">{service.description}</p>
+                <div className="text-gray-800 mb-4">{service.icon}</div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{service.title}</h3>
+                <p className="text-gray-600">{service.description}</p>
               </motion.div>
             ))}
           </div>
@@ -135,8 +210,15 @@ const Home = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-orange-500">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-black relative overflow-hidden">
+        <DotsPattern 
+          dotColor="#374151" 
+          dotSize={2} 
+          spacing={40} 
+          opacity={0.3}
+        />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <motion.div
@@ -155,19 +237,26 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white relative">
+        <DotsPattern 
+          dotColor="#f3f4f6" 
+          dotSize={1.5} 
+          spacing={50} 
+          opacity={0.5}
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-                Why Choose startup&co_?
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+                Why Choose thecodelancer?
               </h2>
-              <p className="text-xl text-gray-300 mb-8">
-                We can delievr you the best final year projects. With Great User Interface.
+              <p className="text-xl text-gray-600 mb-8">
+                We deliver the best final year projects with great user interface and professional approach.
               </p>
               
               <div className="space-y-4">
@@ -178,10 +267,16 @@ const Home = () => {
                   "Industry-experienced mentors and advisors",
                   "24/7 support throughout your project lifecycle"
                 ].map((feature, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0" />
-                    <span className="text-gray-300">{feature}</span>
-                  </div>
+                  <motion.div 
+                    key={index} 
+                    className="flex items-center space-x-3"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0" />
+                    <span className="text-gray-700">{feature}</span>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -192,10 +287,28 @@ const Home = () => {
               transition={{ duration: 0.8 }}
               className="relative"
             >
-              <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 h-96 flex items-center justify-center border border-gray-600">
-                <div className="text-center">
-                  <Zap className="w-24 h-24 text-blue-400 mx-auto mb-4" />
-                  <p className="text-lg text-gray-300">Innovation Starts Here</p>
+              <div className="bg-gray-50 rounded-2xl p-8 h-96 flex items-center justify-center border border-gray-200 relative overflow-hidden">
+                <DotsPattern 
+                  dotColor="#d1d5db" 
+                  dotSize={1} 
+                  spacing={25} 
+                  opacity={0.6}
+                />
+                <div className="text-center relative z-10">
+                  <motion.div
+                    animate={{ 
+                      rotate: [0, 360],
+                      scale: [1, 1.1, 1]
+                    }}
+                    transition={{ 
+                      duration: 4, 
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <Sparkles className="w-24 h-24 text-gray-800 mx-auto mb-4" />
+                  </motion.div>
+                  <p className="text-lg text-gray-700 font-medium">Innovation Starts Here</p>
                 </div>
               </div>
             </motion.div>
@@ -204,26 +317,38 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 relative">
+        <DotsPattern 
+          dotColor="#e5e7eb" 
+          dotSize={2} 
+          spacing={35} 
+          opacity={0.4}
+        />
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-              Why Choose thecodelancer?
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+              Ready to Transform Your Ideas?
             </h2>
-            <p className="text-xl text-gray-300 mb-8">
-              Start your journey with thecodelancer today.
+            <p className="text-xl text-gray-600 mb-8">
+              Start your journey with thecodelancer today and build something amazing.
             </p>
-            <Link
-              to="/register"
-              className="bg-gradient-to-r from-blue-600 to-orange-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 inline-flex items-center space-x-2"
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <span>Get Started Now</span>
-              <ArrowRight className="w-5 h-5" />
-            </Link>
+              <Link
+                to="/register"
+                className="bg-black text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-300 inline-flex items-center space-x-2 border-2 border-transparent hover:border-gray-300"
+              >
+                <span>Get Started Now</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </section>

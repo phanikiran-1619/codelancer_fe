@@ -1,90 +1,159 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Code, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { motion } from 'framer-motion';
+import DotsPattern from './DotsPattern';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-950 text-white border-t border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="bg-black text-white border-t border-gray-800 relative overflow-hidden">
+      <DotsPattern 
+        dotColor="#374151" 
+        dotSize={1.5} 
+        spacing={40} 
+        opacity={0.3}
+      />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             <div className="flex items-center space-x-2 mb-4">
-              <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-r from-blue-600 to-orange-500 rounded-lg">
-                <Code className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-lg font-bold">startup&co_</span>
+              <motion.div 
+                className="flex items-center justify-center w-8 h-8 bg-white rounded-lg"
+                whileHover={{ 
+                  rotate: 360,
+                  scale: 1.1
+                }}
+                transition={{ duration: 0.6 }}
+              >
+                <Code className="w-5 h-5 text-black" />
+              </motion.div>
               <span className="text-lg font-bold">thecodelancer</span>
             </div>
-            <p className="text-gray-400 text-sm mb-4">
+            <p className="text-gray-400 text-sm mb-4 leading-relaxed">
               Empowering final year CS students with innovative project development, 
               technical documentation, and research paper publishing support.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-cyan-400 transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-pink-400 transition-colors">
-                <Instagram className="w-5 h-5" />
-              </a>
+              {[
+                { icon: Facebook, color: "hover:text-blue-400" },
+                { icon: Twitter, color: "hover:text-cyan-400" },
+                { icon: Linkedin, color: "hover:text-blue-400" },
+                { icon: Instagram, color: "hover:text-pink-400" }
+              ].map(({ icon: Icon, color }, index) => (
+                <motion.a 
+                  key={index}
+                  href="#" 
+                  className={`text-gray-400 ${color} transition-colors duration-300`}
+                  whileHover={{ scale: 1.2, y: -2 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <Icon className="w-5 h-5" />
+                </motion.a>
+              ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Quick Links */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             <h3 className="text-lg font-semibold mb-4 text-white">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link to="/about" className="text-gray-400 hover:text-blue-400 transition-colors">About Us</Link></li>
-              <li><Link to="/services" className="text-gray-400 hover:text-blue-400 transition-colors">Services</Link></li>
-              <li><Link to="/projects" className="text-gray-400 hover:text-blue-400 transition-colors">Projects Gallery</Link></li>
-              <li><Link to="/how-it-works" className="text-gray-400 hover:text-blue-400 transition-colors">How It Works</Link></li>
-              <li><Link to="/blog" className="text-gray-400 hover:text-blue-400 transition-colors">Blog</Link></li>
+              {[
+                { name: "About Us", path: "/about" },
+                { name: "Services", path: "/services" },
+                { name: "Projects Gallery", path: "/projects" },
+                { name: "How It Works", path: "/how-it-works" },
+                { name: "Blog", path: "/blog" }
+              ].map((link, index) => (
+                <motion.li 
+                  key={index}
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Link 
+                    to={link.path} 
+                    className="text-gray-400 hover:text-white transition-colors duration-300"
+                  >
+                    {link.name}
+                  </Link>
+                </motion.li>
+              ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Services */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <h3 className="text-lg font-semibold mb-4 text-white">Services</h3>
             <ul className="space-y-2">
-              <li><span className="text-gray-400">Project Development</span></li>
-              <li><span className="text-gray-400">Technical Documentation</span></li>
-              <li><span className="text-gray-400">Research Papers</span></li>
-              <li><span className="text-gray-400">Mentoring</span></li>
-              <li><span className="text-gray-400">Publication Support</span></li>
+              {[
+                "Project Development",
+                "Technical Documentation", 
+                "Research Papers",
+                "Mentoring",
+                "Publication Support"
+              ].map((service, index) => (
+                <motion.li 
+                  key={index}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                >
+                  <span className="text-gray-400">{service}</span>
+                </motion.li>
+              ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Contact Info */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
             <h3 className="text-lg font-semibold mb-4 text-white">Contact Info</h3>
             <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <Mail className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-400">dheerajdonepudi18@gmail.com</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-400">+91 8143965686</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <MapPin className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-400">Vijayawada, Andhra Pradesh, India</span>
-              </div>
+              {[
+                { icon: Mail, text: "dheerajdonepudi18@gmail.com", color: "text-blue-400" },
+                { icon: Phone, text: "+91 8143965686", color: "text-green-400" },
+                { icon: MapPin, text: "Vijayawada, Andhra Pradesh, India", color: "text-red-400" }
+              ].map(({ icon: Icon, text, color }, index) => (
+                <motion.div 
+                  key={index}
+                  className="flex items-center space-x-3"
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Icon className={`w-5 h-5 ${color}`} />
+                  <span className="text-gray-400 text-sm">{text}</span>
+                </motion.div>
+              ))}
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center">
+        <motion.div 
+          className="border-t border-gray-700 mt-8 pt-8 text-center"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
           <p className="text-gray-400 text-sm">
             © 2025 thecodelancer. All rights reserved. Empowering the next generation of CS innovators.
           </p>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
+import DotsPattern from './components/DotsPattern';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
@@ -18,12 +19,22 @@ import Blog from './pages/Blog';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+      <div className="min-h-screen bg-white relative">
+        {/* Global Dots Pattern */}
+        <DotsPattern 
+          dotColor="#f3f4f6" 
+          dotSize={1.5} 
+          spacing={40} 
+          opacity={0.6}
+        />
+        
         <Header />
         <motion.main
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
+          className="relative z-10"
+          style={{ paddingTop: '80px' }} // Account for fixed header
         >
           <Routes>
             <Route path="/" element={<Home />} />
@@ -39,7 +50,7 @@ function App() {
           </Routes>
         </motion.main>
         <Footer />
-        <Chatbot /> {/* Floating chatbot on all pages */}
+        <Chatbot />
       </div>
     </Router>
   );
