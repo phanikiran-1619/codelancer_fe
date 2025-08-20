@@ -3,155 +3,428 @@ import { motion } from 'framer-motion';
 import { 
   BookOpen, 
   FileText, 
-  CheckCircle, 
-  ArrowRight, 
+  Users, 
   Award,
-  Users,
-  Calendar,
-  Target,
-  Zap,
-  Star
+  CheckCircle,
+  ArrowRight,
+  Search,
+  Edit,
+  Send,
+  Trophy,
+  Sparkles,
+  Target
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import DotsPattern from '../components/DotsPattern';
 
 const PublishPaper = () => {
-  const publishingSteps = [
+  const services = [
+    {
+      icon: <Search className="w-12 h-12" />,
+      title: "Research Methodology",
+      description: "Expert guidance on research design, data collection methods, and analytical frameworks",
+      features: [
+        "Research question formulation",
+        "Literature review strategies",
+        "Methodology selection",
+        "Data analysis planning"
+      ]
+    },
+    {
+      icon: <Edit className="w-12 h-12" />,
+      title: "Paper Writing & Editing",
+      description: "Professional writing assistance and comprehensive editing for research papers",
+      features: [
+        "Paper structure optimization",
+        "Academic writing support",
+        "Grammar and style editing",
+        "Citation formatting"
+      ]
+    },
+    {
+      icon: <FileText className="w-12 h-12" />,
+      title: "Journal Formatting",
+      description: "Format your paper according to specific journal requirements and standards",
+      features: [
+        "IEEE format compliance",
+        "ACM style formatting",
+        "Journal-specific templates",
+        "Reference management"
+      ]
+    },
+    {
+      icon: <Send className="w-12 h-12" />,
+      title: "Submission Support",
+      description: "Complete assistance with journal and conference submission processes",
+      features: [
+        "Venue selection guidance",
+        "Submission process support",
+        "Cover letter writing",
+        "Reviewer response assistance"
+      ]
+    }
+  ];
+
+  const publications = [
+    {
+      title: "AI-based Intrusion Detection in IoT Networks",
+      journal: "IEEE Internet of Things Journal",
+      year: "2024",
+      category: "Cybersecurity & AI",
+      impact: "Impact Factor: 10.238"
+    },
+    {
+      title: "Blockchain-based Supply Chain Management System",
+      journal: "ACM Transactions on Management",
+      year: "2024",
+      category: "Blockchain",
+      impact: "Impact Factor: 8.542"
+    },
+    {
+      title: "Machine Learning for Healthcare Data Analytics",
+      journal: "IEEE Transactions on Biomedical Engineering",
+      year: "2023",
+      category: "Healthcare & ML",
+      impact: "Impact Factor: 4.756"
+    },
+    {
+      title: "Smart City Infrastructure Using IoT Sensors",
+      journal: "Future Generation Computer Systems",
+      year: "2023",
+      category: "IoT & Smart Cities",
+      impact: "Impact Factor: 7.307"
+    }
+  ];
+
+  const process = [
     {
       step: "01",
-      title: "Research Assessment",
-      description: "We evaluate your project's research potential and identify the most suitable publication venues.",
-      icon: <Target className="w-8 h-8" />
+      title: "Consultation & Assessment",
+      description: "Initial consultation to understand your research and identify publication opportunities",
+      duration: "1-2 days"
     },
     {
       step: "02",
-      title: "Paper Structure & Writing",
-      description: "Expert guidance on academic writing, proper structure, and compelling presentation of your research.",
-      icon: <FileText className="w-8 h-8" />
+      title: "Research & Writing Support",
+      description: "Comprehensive support for research methodology and paper writing",
+      duration: "2-6 weeks"
     },
     {
       step: "03",
-      title: "Literature Review & Citations",
-      description: "Comprehensive literature review and proper citation formatting according to publication standards.",
-      icon: <BookOpen className="w-8 h-8" />
+      title: "Review & Formatting",
+      description: "Thorough review, editing, and formatting according to target journal standards",
+      duration: "1-2 weeks"
     },
     {
       step: "04",
-      title: "Peer Review Preparation",
-      description: "Thorough review and revision to meet the rigorous standards of academic peer review.",
-      icon: <Users className="w-8 h-8" />
-    },
-    {
-      step: "05",
-      title: "Journal/Conference Selection",
-      description: "Strategic selection of appropriate journals or conferences based on your research domain and impact factor.",
-      icon: <Award className="w-8 h-8" />
-    },
-    {
-      step: "06",
       title: "Submission & Follow-up",
-      description: "Complete submission process management and response handling throughout the review cycle.",
-      icon: <Zap className="w-8 h-8" />
+      description: "Journal submission support and assistance with reviewer responses",
+      duration: "Ongoing"
     }
   ];
 
-  const publicationTypes = [
-    {
-      type: "Conference Papers",
-      description: "Present your research at leading international conferences",
-      venues: ["IEEE Conferences", "ACM Symposiums", "International Workshops"],
-      timeline: "3-6 months",
-      benefits: ["Quick publication", "Networking opportunities", "Peer feedback"]
-    },
-    {
-      type: "Journal Articles",
-      description: "Publish in prestigious peer-reviewed journals",
-      venues: ["IEEE Transactions", "ACM Journals", "Springer Publications"],
-      timeline: "6-12 months",
-      benefits: ["High impact factor", "Extensive peer review", "Career advancement"]
-    },
-    {
-      type: "Workshop Papers",
-      description: "Share preliminary results and get community feedback",
-      venues: ["ACM Workshops", "IEEE Workshops", "Domain-specific Events"],
-      timeline: "2-4 months",
-      benefits: ["Early stage feedback", "Faster publication", "Community building"]
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2
+      }
     }
-  ];
+  };
 
-  const successStories = [
-    {
-      title: "AI-Based Medical Diagnosis System",
-      student: "Sarah Chen",
-      publication: "IEEE Transactions on Medical Imaging",
-      impact: "Cited 150+ times",
-      year: "2024"
-    },
-    {
-      title: "Blockchain Security Framework",
-      student: "Michael Rodriguez",
-      publication: "ACM Conference on Computer Security",
-      impact: "Best Paper Award",
-      year: "2024"
-    },
-    {
-      title: "IoT Network Optimization",
-      student: "Priya Sharma",
-      publication: "IEEE Internet of Things Journal",
-      impact: "Industry adoption",
-      year: "2024"
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5
+      }
     }
-  ];
+  };
 
-  const requirements = [
-    "Completed or near-complete final year project",
-    "Novel contribution or significant improvement to existing methods",
-    "Proper experimental validation or theoretical analysis",
-    "Technical soundness and reproducible results",
-    "Clear research methodology and well-defined problem statement"
-  ];
+  const flipVariants = {
+    hidden: { rotateY: -90, opacity: 0 },
+    visible: {
+      rotateY: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
 
   return (
-    <div className="min-h-screen py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl lg:text-5xl font-bold text-white mb-6"
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white">
+        <DotsPattern 
+          dotColor="#9ca3af" 
+          dotSize={2.5} 
+          spacing={35} 
+          opacity={0.9}
+          animated={true}
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-center"
           >
-            Publish Your <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">Research</span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-gray-300 max-w-3xl mx-auto mb-8"
-          >
-            Transform your final year project into a published research paper. 
-            Get expert guidance on academic writing, peer review, and publication 
-            in top-tier conferences and journals.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <Link
-              to="/contact"
-              className="bg-gradient-to-r from-blue-600 to-orange-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 inline-flex items-center space-x-2"
+            <motion.div
+              variants={itemVariants}
+              animate={{ 
+                rotate: [0, 360],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ 
+                duration: 4, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="mb-6"
             >
-              <span>Start Publication Process</span>
-              <ArrowRight className="w-5 h-5" />
-            </Link>
+              <BookOpen className="w-16 h-16 text-gray-800 mx-auto" />
+            </motion.div>
+            
+            <motion.h1 
+              variants={itemVariants}
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
+            >
+              Publish Your <span className="text-black border-b-4 border-gray-400">Research</span>
+            </motion.h1>
+            
+            <motion.p 
+              variants={itemVariants}
+              className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed"
+            >
+              Transform your final year project into a published research paper. Get expert guidance 
+              for writing, formatting, and publishing in top-tier journals and conferences.
+            </motion.p>
+
+            <motion.div
+              variants={itemVariants}
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto"
+            >
+              {[
+                { number: "25+", label: "Papers Published", icon: <Trophy className="w-6 h-6" /> },
+                { number: "15+", label: "Journals & Conferences", icon: <Award className="w-6 h-6" /> },
+                { number: "100%", label: "Acceptance Rate", icon: <Target className="w-6 h-6" /> }
+              ].map((stat, index) => (
+                <motion.div
+                  key={index}
+                  whileHover={{ 
+                    y: -10,
+                    scale: 1.05,
+                    rotateY: 10
+                  }}
+                  className="bg-gray-50 rounded-xl p-6 shadow-lg border border-gray-200"
+                >
+                  <motion.div 
+                    className="text-gray-800 mb-3 flex justify-center"
+                    whileHover={{ 
+                      scale: 1.2,
+                      rotate: 360
+                    }}
+                  >
+                    {stat.icon}
+                  </motion.div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{stat.number}</h3>
+                  <p className="text-gray-600">{stat.label}</p>
+                </motion.div>
+              ))}
+            </motion.div>
           </motion.div>
+        </div>
+
+        {/* Enhanced Floating Elements */}
+        <motion.div 
+          className="absolute top-20 left-10 w-20 h-20 bg-gray-300 rounded-full opacity-40"
+          animate={{ 
+            y: [0, -30, 0],
+            rotate: [0, 360],
+            scale: [1, 1.3, 1]
+          }}
+          transition={{ 
+            duration: 6, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-10 w-32 h-32 bg-gray-400 rounded-full opacity-30"
+          animate={{ 
+            y: [0, 40, 0],
+            x: [0, -20, 0],
+            rotateZ: [0, -360]
+          }}
+          transition={{ 
+            duration: 8, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </section>
+
+      {/* Services Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 relative">
+        <DotsPattern 
+          dotColor="#d1d5db" 
+          dotSize={2} 
+          spacing={40} 
+          opacity={0.7}
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Publication Support Services
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Comprehensive support to help you publish your research in reputed journals and conferences.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
+                variants={flipVariants}
+                initial="hidden"
+                whileInView="visible"
+                transition={{ delay: index * 0.2 }}
+                whileHover={{ 
+                  y: -10,
+                  scale: 1.02,
+                  boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)"
+                }}
+                className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 relative overflow-hidden"
+              >
+                <DotsPattern 
+                  dotColor="#f9fafb" 
+                  dotSize={1} 
+                  spacing={25} 
+                  opacity={0.6}
+                />
+                
+                <div className="relative z-10">
+                  <motion.div 
+                    className="text-gray-800 mb-6"
+                    whileHover={{ 
+                      scale: 1.1,
+                      rotate: [0, 15, -15, 0]
+                    }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    {service.icon}
+                  </motion.div>
+                  
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">{service.title}</h3>
+                  <p className="text-gray-700 mb-6 leading-relaxed">{service.description}</p>
+                  
+                  <ul className="space-y-3">
+                    {service.features.map((feature, featureIndex) => (
+                      <motion.li 
+                        key={featureIndex}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: (index * 0.2) + (featureIndex * 0.1) }}
+                        whileHover={{ x: 5 }}
+                        className="flex items-center text-gray-600"
+                      >
+                        <CheckCircle className="w-5 h-5 text-green-600 mr-3 flex-shrink-0" />
+                        {feature}
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Publishing Process */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="max-w-7xl mx-auto">
+      {/* Recent Publications */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white relative">
+        <DotsPattern 
+          dotColor="#f3f4f6" 
+          dotSize={1.8} 
+          spacing={45} 
+          opacity={0.6}
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Recent Publications
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Success stories from our students who published their research in prestigious venues.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {publications.map((publication, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30, rotateX: -15 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ 
+                  y: -5,
+                  boxShadow: "0 15px 30px rgba(0, 0, 0, 0.1)"
+                }}
+                className="bg-gray-50 rounded-2xl p-6 shadow-lg border border-gray-200"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <span className="bg-black text-white px-3 py-1 rounded-full text-sm font-medium">
+                    {publication.category}
+                  </span>
+                  <span className="text-gray-500 font-medium">{publication.year}</span>
+                </div>
+                
+                <h3 className="text-xl font-bold text-gray-900 mb-3">{publication.title}</h3>
+                <p className="text-gray-700 mb-2 font-medium">{publication.journal}</p>
+                <p className="text-gray-600 text-sm">{publication.impact}</p>
+                
+                <motion.div 
+                  className="mt-4 flex items-center text-green-600"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <Award className="w-4 h-4 mr-2" />
+                  <span className="text-sm font-medium">Successfully Published</span>
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Process Timeline */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black relative overflow-hidden">
+        <DotsPattern 
+          dotColor="#374151" 
+          dotSize={2.5} 
+          spacing={40} 
+          opacity={0.6}
+        />
+        
+        <div className="max-w-4xl mx-auto relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -160,242 +433,179 @@ const PublishPaper = () => {
           >
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Publication Process</h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Our systematic approach to getting your research published in reputable venues.
+              Our structured approach to help you publish your research successfully.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {publishingSteps.map((step, index) => (
+          <div className="space-y-8">
+            {process.map((step, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-700"
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                whileHover={{ scale: 1.02, y: -5 }}
+                className="bg-gray-900 rounded-2xl p-8 border border-gray-700"
               >
                 <div className="flex items-center mb-4">
-                  <div className="bg-gradient-to-r from-blue-600 to-orange-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold mr-4">
+                  <motion.div 
+                    className="bg-white text-black w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mr-6"
+                    whileHover={{ 
+                      scale: 1.2,
+                      rotate: 360,
+                      boxShadow: "0 0 20px rgba(255, 255, 255, 0.3)"
+                    }}
+                    transition={{ duration: 0.6 }}
+                  >
                     {step.step}
+                  </motion.div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-white">{step.title}</h3>
+                    <span className="text-gray-400">{step.duration}</span>
                   </div>
-                  <div className="text-blue-400">{step.icon}</div>
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-3">{step.title}</h3>
-                <p className="text-gray-300">{step.description}</p>
+                <p className="text-gray-300 leading-relaxed">{step.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Publication Types */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-gray-800 py-16">
-        <div className="max-w-7xl mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Publication Options</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Choose the best publication venue for your research based on timeline, impact, and career goals.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {publicationTypes.map((type, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-700"
-              >
-                <h3 className="text-2xl font-bold text-white mb-4">{type.type}</h3>
-                <p className="text-gray-300 mb-6">{type.description}</p>
-                
-                <div className="mb-6">
-                  <h4 className="font-semibold text-white mb-3">Target Venues:</h4>
-                  <ul className="space-y-2">
-                    {type.venues.map((venue, venueIndex) => (
-                      <li key={venueIndex} className="text-gray-300 text-sm">• {venue}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="mb-6">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <Calendar className="w-5 h-5 text-blue-400" />
-                    <span className="font-semibold text-white">Timeline: {type.timeline}</span>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-white mb-3">Benefits:</h4>
-                  <div className="space-y-2">
-                    {type.benefits.map((benefit, benefitIndex) => (
-                      <div key={benefitIndex} className="flex items-center space-x-2">
-                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-                        <span className="text-gray-300 text-sm">{benefit}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Success Stories */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="max-w-7xl mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Success Stories</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Recent publications by our students in top-tier conferences and journals.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {successStories.map((story, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-700"
-              >
-                <div className="flex items-center mb-4">
-                  <Star className="w-6 h-6 text-yellow-500 mr-2" />
-                  <span className="text-sm text-gray-400">{story.year}</span>
-                </div>
-                <h3 className="text-lg font-semibold text-white mb-2">{story.title}</h3>
-                <p className="text-blue-400 font-medium mb-2">{story.student}</p>
-                <p className="text-gray-300 text-sm mb-3">{story.publication}</p>
-                <div className="bg-green-900/50 text-green-400 px-3 py-1 rounded-full text-sm font-medium inline-block">
-                  {story.impact}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Requirements */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-gray-800 py-16">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-                Publication Requirements
-              </h2>
-              <p className="text-lg text-gray-300 mb-8">
-                To ensure successful publication, your project should meet these key criteria.
-              </p>
-              
-              <div className="space-y-4">
-                {requirements.map((requirement, index) => (
-                  <div key={index} className="flex items-start space-x-3">
-                    <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0 mt-1" />
-                    <span className="text-gray-300">{requirement}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="bg-gray-900 rounded-2xl p-8 shadow-lg border border-gray-700"
-            >
-              <h3 className="text-2xl font-bold text-white mb-6">Get Started Today</h3>
-              <p className="text-gray-300 mb-6">
-                Ready to publish your research? Contact us for a free consultation 
-                and publication assessment.
-              </p>
-              
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-blue-900/50 rounded-full flex items-center justify-center">
-                    <BookOpen className="w-6 h-6 text-blue-400" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-white">Free Assessment</h4>
-                    <p className="text-gray-300 text-sm">Evaluate your project's publication potential</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-orange-900/50 rounded-full flex items-center justify-center">
-                    <Users className="w-6 h-6 text-orange-400" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-white">Expert Guidance</h4>
-                    <p className="text-gray-300 text-sm">Work with experienced research mentors</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-green-900/50 rounded-full flex items-center justify-center">
-                    <Award className="w-6 h-6 text-green-400" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-white">Publication Success</h4>
-                    <p className="text-gray-300 text-sm">95% success rate in top venues</p>
-                  </div>
-                </div>
-              </div>
-              
-              <Link
-                to="/contact"
-                className="w-full bg-gradient-to-r from-blue-600 to-orange-500 text-white py-3 px-6 rounded-full font-semibold text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105 mt-6 inline-block"
-              >
-                Schedule Consultation
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Information */}
-      <section className="px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-orange-500 py-16">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* Benefits Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 relative">
+        <DotsPattern 
+          dotColor="#e5e7eb" 
+          dotSize={2} 
+          spacing={35} 
+          opacity={0.7}
+        />
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-8">
+              Why Publish Your Research?
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  icon: <Users className="w-8 h-8" />,
+                  title: "Academic Recognition",
+                  description: "Gain recognition in the academic community and build your research profile"
+                },
+                {
+                  icon: <Trophy className="w-8 h-8" />,
+                  title: "Career Advancement",
+                  description: "Published papers significantly boost your CV and career prospects"
+                },
+                {
+                  icon: <Sparkles className="w-8 h-8" />,
+                  title: "Research Impact",
+                  description: "Contribute to the knowledge base and make a real-world impact"
+                }
+              ].map((benefit, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  whileHover={{ 
+                    y: -10,
+                    scale: 1.05,
+                    rotateY: 5
+                  }}
+                  className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200"
+                >
+                  <motion.div 
+                    className="text-gray-800 mb-4 flex justify-center"
+                    whileHover={{ 
+                      scale: 1.2,
+                      rotate: 360
+                    }}
+                  >
+                    {benefit.icon}
+                  </motion.div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{benefit.title}</h3>
+                  <p className="text-gray-600">{benefit.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white relative">
+        <DotsPattern 
+          dotColor="#d1d5db" 
+          dotSize={2} 
+          spacing={40} 
+          opacity={0.6}
+        />
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                rotate: [0, 5, -5, 0]
+              }}
+              transition={{ 
+                duration: 3, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="mb-8"
+            >
+              <BookOpen className="w-16 h-16 text-gray-800 mx-auto" />
+            </motion.div>
+            
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
               Ready to Publish Your Research?
             </h2>
-            <p className="text-xl text-white/90 mb-8">
-              Contact our publication specialists for personalized guidance and support.
+            <p className="text-xl text-gray-600 mb-8">
+              Transform your final year project into a published research paper with our expert guidance.
             </p>
+            
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/contact"
-                className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 inline-flex items-center space-x-2"
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <span>Contact Publication Team</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <a
-                href="mailto:publish@thecodelancer.com"
-                className="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300"
+                <Link
+                  to="/register"
+                  className="bg-black text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-300 inline-flex items-center space-x-2"
+                >
+                  <span>Start Publishing</span>
+                  <motion.div
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.div>
+                </Link>
+              </motion.div>
+              
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                publish@thecodelancer.com
-              </a>
+                <Link
+                  to="/contact"
+                  className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-full text-lg font-semibold hover:border-black hover:text-black hover:shadow-lg transition-all duration-300 inline-flex items-center space-x-2"
+                >
+                  <span>Get Consultation</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </motion.div>
             </div>
           </motion.div>
         </div>
