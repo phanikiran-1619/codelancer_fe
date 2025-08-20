@@ -1,279 +1,512 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { 
-  MessageCircle, 
+  MessageSquare, 
   FileText, 
   Code, 
-  BookOpen, 
   CheckCircle, 
-  ArrowRight,
-  Users,
+  ArrowRight, 
+  Users, 
+  Calendar,
+  Lightbulb,
   Target,
-  Zap,
-  Award
+  Award,
+  Sparkles
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import DotsPattern from '../components/DotsPattern';
 
 const HowItWorks = () => {
   const steps = [
     {
       step: "01",
-      icon: <MessageCircle className="w-8 h-8" />,
+      icon: <MessageSquare className="w-12 h-12" />,
       title: "Initial Consultation",
-      description: "We start with a comprehensive discussion about your project goals, technical interests, and academic requirements. Our experts help you identify the most suitable technologies and scope for your final year project.",
-      duration: "1-2 days",
-      deliverables: ["Project scope document", "Technology roadmap", "Timeline planning"]
+      description: "Share your project ideas, requirements, and academic goals with our expert team",
+      details: [
+        "Free 30-minute consultation call",
+        "Project requirement analysis",
+        "Technology recommendation",
+        "Timeline estimation"
+      ]
     },
     {
-      step: "02",
-      icon: <Target className="w-8 h-8" />,
-      title: "Project Planning & Design",
-      description: "Detailed project planning including architecture design, technology stack selection, and milestone definition. We create a comprehensive blueprint that guides the entire development process.",
-      duration: "3-5 days",
-      deliverables: ["System architecture", "Technical specifications", "Project timeline"]
+      step: "02", 
+      icon: <Lightbulb className="w-12 h-12" />,
+      title: "Project Planning",
+      description: "We create a detailed project plan tailored to your specific needs and timeline",
+      details: [
+        "Customized project roadmap",
+        "Technology stack selection",
+        "Resource allocation",
+        "Milestone definition"
+      ]
     },
     {
       step: "03",
-      icon: <Code className="w-8 h-8" />,
-      title: "Development & Implementation",
-      description: "Hands-on development support with regular mentoring sessions. You'll receive guidance on coding best practices, implementation strategies, and troubleshooting complex technical challenges.",
-      duration: "6-12 weeks",
-      deliverables: ["Working prototype", "Source code", "Development documentation"]
+      icon: <Code className="w-12 h-12" />,
+      title: "Development Phase",
+      description: "Expert-guided development with regular check-ins and continuous support",
+      details: [
+        "Hands-on mentoring sessions",
+        "Code reviews and guidance",
+        "Weekly progress meetings",
+        "24/7 support availability"
+      ]
     },
     {
       step: "04",
-      icon: <FileText className="w-8 h-8" />,
-      title: "Documentation & Testing",
-      description: "Comprehensive documentation creation including technical specifications, user manuals, and IEEE-standard project reports. We also ensure thorough testing and quality assurance.",
-      duration: "2-3 weeks",
-      deliverables: ["Technical documentation", "Test reports", "User manuals"]
+      icon: <FileText className="w-12 h-12" />,
+      title: "Documentation",
+      description: "Comprehensive IEEE-standard documentation and technical writing support",
+      details: [
+        "IEEE format documentation",
+        "Technical specifications",
+        "User manuals creation",
+        "Presentation materials"
+      ]
     },
     {
       step: "05",
-      icon: <BookOpen className="w-8 h-8" />,
-      title: "Research Paper Writing",
-      description: "Transform your project into a publishable research paper. We guide you through literature review, methodology documentation, results analysis, and academic writing standards.",
-      duration: "3-4 weeks",
-      deliverables: ["Research paper draft", "Conference/journal recommendations", "Submission guidelines"]
+      icon: <Target className="w-12 h-12" />,
+      title: "Testing & Review",
+      description: "Thorough testing, debugging, and final project review before submission",
+      details: [
+        "Comprehensive testing",
+        "Bug fixes and optimization",
+        "Performance evaluation",
+        "Final quality assurance"
+      ]
     },
     {
       step: "06",
-      icon: <Award className="w-8 h-8" />,
-      title: "Publication & Presentation",
-      description: "Final review, formatting, and submission support for conferences or journals. We also help prepare presentation materials and defense strategies for your project evaluation.",
-      duration: "2-4 weeks",
-      deliverables: ["Formatted paper", "Presentation slides", "Defense preparation"]
+      icon: <Award className="w-12 h-12" />,
+      title: "Delivery & Support",
+      description: "Project delivery with post-submission support and presentation assistance",
+      details: [
+        "Complete project handover",
+        "Viva preparation support",
+        "Presentation coaching",
+        "Post-delivery assistance"
+      ]
     }
   ];
 
-  const benefits = [
+  const processHighlights = [
     {
-      icon: <Users className="w-6 h-6" />,
-      title: "Project Explanation",
-      description: "We are here to explain your project in detail, ensuring you understand every aspect of your work"
+      icon: <Users className="w-8 h-8" />,
+      title: "Expert Mentorship",
+      description: "Industry professionals and academic experts guide you throughout"
     },
     {
-      icon: <Zap className="w-6 h-6" />,
-      title: "Latest Technologies",
-      description: "Access to cutting-edge tools and frameworks for modern CS projects"
+      icon: <Calendar className="w-8 h-8" />,
+      title: "Flexible Timeline",
+      description: "Customized schedules that work with your academic calendar"
     },
     {
-      icon: <CheckCircle className="w-6 h-6" />,
+      icon: <CheckCircle className="w-8 h-8" />,
       title: "Quality Assurance",
-      description: "Rigorous review process ensuring academic and technical excellence"
-    },
-    {
-      icon: <Award className="w-6 h-6" />,
-      title: "Publication Success",
-      description: "High success rate in conference and journal publications"
+      description: "Multiple review cycles ensure top-notch project quality"
     }
   ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5
+      }
+    }
+  };
+
+  const stepVariants = {
+    hidden: { scale: 0.8, opacity: 0, rotateY: -90 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      rotateY: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
 
   return (
-    <div className="min-h-screen py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl lg:text-5xl font-bold text-white mb-6"
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white">
+        <DotsPattern 
+          dotColor="#9ca3af" 
+          dotSize={2.5} 
+          spacing={35} 
+          opacity={0.9}
+          animated={true}
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-center"
           >
-            How It <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">Works</span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-gray-300 max-w-3xl mx-auto"
-          >
-            A step-by-step journey from initial concept to successful project completion 
-            and publication. Here's how we guide you through your final year CS project.
-          </motion.p>
+            <motion.div
+              variants={itemVariants}
+              animate={{ 
+                rotate: [0, 360],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ 
+                duration: 4, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="mb-6"
+            >
+              <Sparkles className="w-16 h-16 text-gray-800 mx-auto" />
+            </motion.div>
+            
+            <motion.h1 
+              variants={itemVariants}
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
+            >
+              How It <span className="text-black border-b-4 border-gray-400">Works</span>
+            </motion.h1>
+            
+            <motion.p 
+              variants={itemVariants}
+              className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed"
+            >
+              From initial idea to final submission, we guide you through every step of your 
+              final year project journey with expert mentorship and comprehensive support.
+            </motion.p>
+          </motion.div>
         </div>
+
+        {/* Enhanced Floating Elements */}
+        <motion.div 
+          className="absolute top-20 left-10 w-20 h-20 bg-gray-300 rounded-full opacity-40"
+          animate={{ 
+            y: [0, -30, 0],
+            rotate: [0, 360],
+            scale: [1, 1.3, 1]
+          }}
+          transition={{ 
+            duration: 6, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-10 w-32 h-32 bg-gray-400 rounded-full opacity-30"
+          animate={{ 
+            y: [0, 40, 0],
+            x: [0, -20, 0],
+            rotateZ: [0, -360]
+          }}
+          transition={{ 
+            duration: 8, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
       </section>
 
       {/* Process Steps */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="space-y-16">
-            {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
-                  index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
-                }`}
-              >
-                <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
-                  <div className="flex items-center mb-6">
-                    <div className="bg-gradient-to-r from-blue-600 to-orange-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-xl font-bold mr-4">
-                      {step.step}
-                    </div>
-                    <div>
-                      <h2 className="text-2xl font-bold text-white">{step.title}</h2>
-                      <span className="text-blue-400 font-medium">{step.duration}</span>
-                    </div>
-                  </div>
-                  
-                  <p className="text-lg text-gray-300 mb-8">{step.description}</p>
-                  
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-white mb-3">Deliverables:</h4>
-                    <div className="space-y-2">
-                      {step.deliverables.map((deliverable, deliverableIndex) => (
-                        <div key={deliverableIndex} className="flex items-center space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                          <span className="text-gray-300">{deliverable}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className={index % 2 === 1 ? 'lg:col-start-1' : ''}>
-                  <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 h-80 flex items-center justify-center border border-gray-600">
-                    <div className="text-center">
-                      <div className="text-blue-400 mb-4 flex justify-center">{step.icon}</div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{step.title}</h3>
-                      <p className="text-gray-300">Step {step.step} of 6</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-gray-800 py-16">
-        <div className="max-w-7xl mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Why Our Process Works</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Our structured approach ensures quality, timely delivery, and Project success.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-gray-900 rounded-xl p-6 shadow-lg text-center hover:shadow-xl transition-shadow duration-300 border border-gray-700"
-              >
-                <div className="text-blue-400 mb-4 flex justify-center">{benefit.icon}</div>
-                <h3 className="text-lg font-semibold text-white mb-3">{benefit.title}</h3>
-                <p className="text-gray-300">{benefit.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Timeline Visualization */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 relative">
+        <DotsPattern 
+          dotColor="#d1d5db" 
+          dotSize={2} 
+          spacing={40} 
+          opacity={0.7}
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Project Timeline</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Typical timeline for a complete final year CS project with publication.
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Our 6-Step Process</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              A proven methodology that ensures your project's success from conception to completion.
             </p>
           </motion.div>
 
-          <div className="bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-700">
-            <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
-              {[
-                { phase: "Planning", weeks: "1-2", color: "bg-blue-500" },
-                { phase: "Design", weeks: "2-3", color: "bg-green-500" },
-                { phase: "Development", weeks: "6-12", color: "bg-orange-500" },
-                { phase: "Testing", weeks: "2-3", color: "bg-purple-500" },
-                { phase: "Documentation", weeks: "3-4", color: "bg-red-500" },
-                { phase: "Publication", weeks: "2-4", color: "bg-indigo-500" }
-              ].map((phase, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
-                  className="text-center"
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {steps.map((step, index) => (
+              <motion.div
+                key={index}
+                variants={stepVariants}
+                initial="hidden"
+                whileInView="visible"
+                transition={{ delay: index * 0.2 }}
+                whileHover={{ 
+                  y: -10,
+                  scale: 1.02,
+                  boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)"
+                }}
+                className="bg-white rounded-3xl p-8 shadow-lg border border-gray-200 relative overflow-hidden"
+              >
+                <DotsPattern 
+                  dotColor="#f9fafb" 
+                  dotSize={1} 
+                  spacing={25} 
+                  opacity={0.6}
+                />
+                
+                <div className="relative z-10">
+                  <div className="flex items-center mb-6">
+                    <motion.div 
+                      className="bg-black text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mr-4"
+                      whileHover={{ 
+                        scale: 1.2,
+                        rotate: 360,
+                        boxShadow: "0 0 20px rgba(0, 0, 0, 0.3)"
+                      }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      {step.step}
+                    </motion.div>
+                    <motion.div 
+                      className="text-gray-800"
+                      whileHover={{ 
+                        scale: 1.1,
+                        rotate: [0, 10, -10, 0]
+                      }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      {step.icon}
+                    </motion.div>
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">{step.title}</h3>
+                  <p className="text-gray-700 mb-6 leading-relaxed">{step.description}</p>
+                  
+                  <ul className="space-y-2">
+                    {step.details.map((detail, detailIndex) => (
+                      <motion.li 
+                        key={detailIndex}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: (index * 0.2) + (detailIndex * 0.1) }}
+                        className="flex items-center text-gray-600"
+                      >
+                        <motion.div
+                          whileHover={{ scale: 1.3, rotate: 360 }}
+                          className="w-2 h-2 bg-gray-800 rounded-full mr-3 flex-shrink-0"
+                        />
+                        {detail}
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Process Highlights */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white relative">
+        <DotsPattern 
+          dotColor="#f3f4f6" 
+          dotSize={1.8} 
+          spacing={45} 
+          opacity={0.6}
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Why Our Process Works</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Key elements that make our methodology successful for CS students.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {processHighlights.map((highlight, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30, rotateY: -90 }}
+                whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                whileHover={{ 
+                  y: -10,
+                  rotateX: 5,
+                  boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)",
+                  scale: 1.05
+                }}
+                className="bg-gray-50 rounded-2xl p-8 text-center shadow-lg border border-gray-100"
+              >
+                <motion.div 
+                  className="text-gray-800 mb-4 flex justify-center"
+                  whileHover={{ 
+                    scale: 1.2,
+                    rotate: [0, 15, -15, 0]
+                  }}
+                  transition={{ duration: 0.6 }}
                 >
-                  <div className={`${phase.color} h-4 rounded-full mb-3`}></div>
-                  <h4 className="font-semibold text-white mb-1">{phase.phase}</h4>
-                  <p className="text-sm text-gray-300">{phase.weeks} weeks</p>
+                  {highlight.icon}
                 </motion.div>
-              ))}
-            </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{highlight.title}</h3>
+                <p className="text-gray-600">{highlight.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Timeline Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black relative overflow-hidden">
+        <DotsPattern 
+          dotColor="#374151" 
+          dotSize={2.5} 
+          spacing={40} 
+          opacity={0.6}
+        />
+        
+        <div className="max-w-4xl mx-auto relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Typical Project Timeline</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Every project is unique, but here's what you can expect in terms of timeline.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                duration: "Week 1-2",
+                title: "Project Setup",
+                description: "Consultation, planning, and initial setup"
+              },
+              {
+                duration: "Week 3-10",
+                title: "Development",
+                description: "Core development with weekly milestones"
+              },
+              {
+                duration: "Week 11-12",
+                title: "Finalization",
+                description: "Testing, documentation, and delivery"
+              }
+            ].map((timeline, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                whileHover={{ y: -5, scale: 1.05 }}
+                className="bg-gray-900 rounded-xl p-6 text-center border border-gray-700"
+              >
+                <motion.div 
+                  className="text-2xl font-bold text-white mb-2"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  {timeline.duration}
+                </motion.div>
+                <h3 className="text-xl font-semibold text-white mb-3">{timeline.title}</h3>
+                <p className="text-gray-300">{timeline.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-orange-500 py-16">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 relative">
+        <DotsPattern 
+          dotColor="#e5e7eb" 
+          dotSize={2} 
+          spacing={35} 
+          opacity={0.7}
+        />
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-              Ready to Begin Your Journey?
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                rotate: [0, 5, -5, 0]
+              }}
+              transition={{ 
+                duration: 3, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="mb-8"
+            >
+              <Target className="w-16 h-16 text-gray-800 mx-auto" />
+            </motion.div>
+            
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+              Ready to Start Your Project Journey?
             </h2>
-            <p className="text-xl text-white/90 mb-8">
-              Start your final year project with confidence. Our structured process 
-              ensures your success from day one.
+            <p className="text-xl text-gray-600 mb-8">
+              Let's turn your project ideas into reality with our proven process and expert guidance.
             </p>
+            
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/register"
-                className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 inline-flex items-center space-x-2"
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <span>Start Your Project</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link
-                to="/contact"
-                className="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 inline-flex items-center space-x-2"
+                <Link
+                  to="/register"
+                  className="bg-black text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-300 inline-flex items-center space-x-2"
+                >
+                  <span>Get Started Now</span>
+                  <motion.div
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.div>
+                </Link>
+              </motion.div>
+              
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <span>Schedule Consultation</span>
-                <MessageCircle className="w-5 h-5" />
-              </Link>
+                <Link
+                  to="/contact"
+                  className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-full text-lg font-semibold hover:border-black hover:text-black hover:shadow-lg transition-all duration-300 inline-flex items-center space-x-2"
+                >
+                  <span>Ask Questions</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </motion.div>
             </div>
           </motion.div>
         </div>

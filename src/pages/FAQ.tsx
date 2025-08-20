@@ -1,319 +1,470 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown, ChevronUp, MessageCircle, Mail, Phone } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Plus, Minus, Search, HelpCircle, MessageSquare, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import DotsPattern from '../components/DotsPattern';
 
 const FAQ = () => {
-  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [openItems, setOpenItems] = useState<number[]>([]);
 
-  const faqCategories = [
+  const faqData = [
     {
-      category: "General Information",
-      faqs: [
+      category: "General Services",
+      questions: [
         {
-          question: "What is startup&co_ and what services do you provide?",
-          answer: "startup&co_ is a comprehensive platform dedicated to supporting final year Computer Science students. We provide project development guidance, technical documentation support, research paper writing assistance, and mentoring services. Our goal is to help you create innovative projects using cutting-edge technologies like AI, IoT, and cybersecurity while ensuring academic excellence."
+          q: "What services does thecodelancer offer?",
+          a: "We offer comprehensive support for CS students including project development, technical documentation, research paper writing, mentoring, and publication assistance. Our services cover AI/ML, IoT, cybersecurity, web development, and more."
         },
         {
-          question: "Who can use startup&co_ services?",
-          answer: "Our services are primarily designed for final year Computer Science students, but we also welcome graduate students, researchers, and professionals looking to develop innovative tech projects or publish research papers. We work with students from universities worldwide."
+          q: "Who can use thecodelancer services?",
+          a: "Our services are designed for B.Tech and M.Tech Computer Science students, particularly those working on final year projects. We also support students from related fields like IT, Electronics, and Data Science."
         },
         {
-          question: "How long does the entire process typically take?",
-          answer: "The timeline varies depending on the scope of your project and chosen services. Typically, a complete final year project with documentation takes 3-6 months, while research paper writing and publication can take an additional 2-4 months. We provide detailed timelines during the initial consultation."
+          q: "How do I get started with thecodelancer?",
+          a: "Simply click on 'Register Now' on our website, fill out the registration form with your project requirements, and we'll contact you within 24 hours to discuss your needs and create a customized plan."
         }
       ]
     },
     {
       category: "Project Development",
-      faqs: [
+      questions: [
         {
-          question: "What types of projects do you help develop?",
-          answer: "We specialize in cutting-edge technology projects including AI/Machine Learning applications, IoT systems, cybersecurity solutions, blockchain implementations, web and mobile applications, cloud computing solutions, and data science projects. We focus on innovative, industry-relevant solutions that stand out academically."
+          q: "What types of projects do you help with?",
+          a: "We assist with a wide range of projects including AI & Machine Learning implementations, IoT device integration, cybersecurity solutions, web and mobile applications, blockchain projects, and cloud computing systems."
         },
         {
-          question: "Do I need to have prior experience with advanced technologies?",
-          answer: "No prior experience with advanced technologies is required. Our mentors will guide you through the learning process and help you acquire the necessary skills. We provide comprehensive support from basic concepts to advanced implementation techniques."
+          q: "Do you provide complete project development or just guidance?",
+          a: "We offer both options. We can provide complete end-to-end project development or serve as mentors guiding you through the development process, depending on your needs and preferences."
         },
         {
-          question: "Can you help with project ideas and topic selection?",
-          answer: "Absolutely! We offer consultation sessions to help you identify suitable project topics based on your interests, current technology trends, and academic requirements. We ensure your project has both academic value and industry relevance."
-        },
-        {
-          question: "What programming languages and technologies do you support?",
-          answer: "We support a wide range of technologies including Python, Java, JavaScript, React, Node.js, TensorFlow, PyTorch, Arduino, Raspberry Pi, cloud platforms (AWS, Azure, Google Cloud), databases (MySQL, PostgreSQL, MongoDB), and many more. Our team stays updated with the latest tech stacks."
+          q: "Can you help with project ideas and topic selection?",
+          a: "Absolutely! We help students brainstorm innovative project ideas based on current industry trends, your interests, and academic requirements. We ensure your project stands out and meets academic standards."
         }
       ]
     },
     {
-      category: "Documentation & Writing",
-      faqs: [
+      category: "Documentation & Papers",
+      questions: [
         {
-          question: "What documentation standards do you follow?",
-          answer: "We follow IEEE standards for technical documentation, including proper formatting for project reports, Software Requirements Specification (SRS), system design documents, and UML diagrams. All documentation meets academic and industry standards."
+          q: "Do you provide IEEE standard documentation?",
+          a: "Yes, we specialize in IEEE standard documentation including Software Requirements Specification (SRS), system design documents, user manuals, and technical reports that meet academic and industry standards."
         },
         {
-          question: "Do you help with research paper writing from scratch?",
-          answer: "Yes, we provide comprehensive research paper writing support from initial concept to final submission. This includes literature review, methodology design, results analysis, academic writing, proper citation formatting, and submission guidance."
+          q: "Can you help with research paper publication?",
+          a: "We provide comprehensive support for research paper writing, formatting, and publication. This includes methodology guidance, literature review assistance, paper structuring, and submission to relevant journals and conferences."
         },
         {
-          question: "What citation styles do you support?",
-          answer: "We support all major citation styles including IEEE, ACM, APA, MLA, and Chicago. Our team ensures proper citation formatting and helps you avoid plagiarism while maintaining academic integrity."
+          q: "What documentation formats do you support?",
+          a: "We support various documentation formats including IEEE standards, ACM format, project reports, technical specifications, user manuals, API documentation, and presentation materials."
         }
       ]
     },
     {
-      category: "Publication & Submission",
-      faqs: [
+      category: "Pricing & Timeline",
+      questions: [
         {
-          question: "What is your success rate for paper publications?",
-          answer: "We maintain a 95% success rate for paper publications across various conferences and journals. Our experienced team helps identify the most suitable venues and ensures your paper meets publication standards before submission."
+          q: "How much do your services cost?",
+          a: "Our pricing varies based on project complexity, timeline, and specific requirements. We offer competitive rates with student-friendly packages. Contact us for a personalized quote based on your project needs."
         },
         {
-          question: "Which conferences and journals do you target?",
-          answer: "We target reputable venues including IEEE conferences and transactions, ACM publications, Springer journals, and domain-specific conferences. The choice depends on your research area, timeline, and career goals."
+          q: "Do you offer discounts for students?",
+          a: "Yes, we offer special student discounts and flexible payment plans. We understand budget constraints and work with students to make our services affordable while maintaining quality."
         },
         {
-          question: "How much does paper publication support cost?",
-          answer: "Publication support costs vary based on the scope of work required. We offer different packages ranging from basic writing assistance to comprehensive publication management. Contact us for a personalized quote based on your specific needs."
-        },
-        {
-          question: "Do you guarantee publication acceptance?",
-          answer: "While we cannot guarantee acceptance (as this depends on peer review), our high success rate reflects our commitment to quality. We thoroughly prepare papers to meet publication standards and provide revision support if needed."
+          q: "What is the typical timeline for project completion?",
+          a: "Timeline varies based on project complexity. Simple projects may take 1-2 months, while complex AI/ML or IoT projects might need 3-6 months. We work with your academic deadlines to ensure timely delivery."
         }
       ]
     },
     {
-      category: "Pricing & Process",
-      faqs: [
+      category: "Support & Communication",
+      questions: [
         {
-          question: "How much do your services cost?",
-          answer: "Our pricing varies based on the specific services required and project complexity. We offer flexible packages for different budgets, including payment plans for students. Contact us for a personalized quote after discussing your requirements."
+          q: "How do you provide mentoring and support?",
+          a: "We offer one-on-one mentoring sessions via video calls, regular progress reviews, 24/7 chat support, and hands-on guidance throughout your project lifecycle. Our mentors are industry experts and academic professionals."
         },
         {
-          question: "Do you offer payment plans or student discounts?",
-          answer: "Yes, we offer flexible payment plans and special discounts for students. We understand the financial constraints students face and strive to make our services accessible while maintaining quality."
+          q: "What is your response time for queries?",
+          a: "We typically respond to emails within 24 hours on business days. For urgent queries, we offer phone support during business hours (9 AM - 6 PM IST) for immediate assistance."
         },
         {
-          question: "What is included in the mentoring sessions?",
-          answer: "Mentoring sessions include one-on-one guidance with experienced professionals, technical problem-solving, code reviews, career advice, industry insights, and project planning. Sessions can be conducted online or in-person based on availability."
-        },
-        {
-          question: "Can I get a refund if I'm not satisfied?",
-          answer: "We offer a satisfaction guarantee with our services. If you're not satisfied with our initial consultation or early deliverables, we provide refund options. Our goal is to ensure your success and satisfaction throughout the process."
-        }
-      ]
-    },
-    {
-      category: "Technical Support",
-      faqs: [
-        {
-          question: "What kind of technical support do you provide?",
-          answer: "We provide comprehensive technical support including debugging assistance, code optimization, architecture design, deployment guidance, performance tuning, and troubleshooting. Our support is available throughout your project development lifecycle."
-        },
-        {
-          question: "Do you provide support after project completion?",
-          answer: "Yes, we offer post-completion support for a specified period, including minor modifications, bug fixes, and deployment assistance. Extended support packages are also available for ongoing maintenance and updates."
-        },
-        {
-          question: "Can you help with project presentations and demos?",
-          answer: "Absolutely! We help prepare compelling project presentations, create demonstration videos, design presentation slides, and provide guidance for project defense sessions. We ensure you can effectively communicate your project's value and technical achievements."
+          q: "Do you provide post-project support?",
+          a: "Yes, we offer post-project support including documentation revisions, presentation assistance, viva preparation, and help with project deployment or demonstration setup."
         }
       ]
     }
   ];
 
-  const toggleFAQ = (index: number) => {
-    setOpenFAQ(openFAQ === index ? null : index);
+  const allQuestions = faqData.flatMap((category, categoryIndex) => 
+    category.questions.map((q, qIndex) => ({
+      ...q,
+      id: categoryIndex * 100 + qIndex,
+      category: category.category
+    }))
+  );
+
+  const filteredQuestions = allQuestions.filter(
+    item =>
+      item.q.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.a.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const toggleItem = (id: number) => {
+    setOpenItems(prev =>
+      prev.includes(id) 
+        ? prev.filter(item => item !== id)
+        : [...prev, id]
+    );
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5
+      }
+    }
   };
 
   return (
-    <div className="min-h-screen py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl lg:text-5xl font-bold text-white mb-6"
-          >
-            Frequently Asked <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">Questions</span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-gray-300 max-w-3xl mx-auto"
-          >
-            Find answers to common questions about our services, process, and how we can help 
-            you succeed in your final year CS project and research publication journey.
-          </motion.p>
-        </div>
-      </section>
-
-      {/* FAQ Categories */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="max-w-4xl mx-auto">
-          {faqCategories.map((category, categoryIndex) => (
-            <motion.div
-              key={categoryIndex}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: categoryIndex * 0.1 }}
-              className="mb-12"
-            >
-              <h2 className="text-2xl font-bold text-white mb-6 pb-2 border-b-2 border-blue-400">
-                {category.category}
-              </h2>
-              
-              <div className="space-y-4">
-                {category.faqs.map((faq, faqIndex) => {
-                  const globalIndex = categoryIndex * 100 + faqIndex;
-                  return (
-                    <div
-                      key={faqIndex}
-                      className="bg-gray-800 rounded-xl shadow-lg border border-gray-700 overflow-hidden"
-                    >
-                      <button
-                        onClick={() => toggleFAQ(globalIndex)}
-                        className="w-full px-6 py-6 text-left flex justify-between items-center hover:bg-gray-700 transition-colors duration-200"
-                      >
-                        <h3 className="text-lg font-semibold text-white pr-4">
-                          {faq.question}
-                        </h3>
-                        {openFAQ === globalIndex ? (
-                          <ChevronUp className="w-5 h-5 text-blue-400 flex-shrink-0" />
-                        ) : (
-                          <ChevronDown className="w-5 h-5 text-gray-500 flex-shrink-0" />
-                        )}
-                      </button>
-                      
-                      {openFAQ === globalIndex && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="px-6 pb-6"
-                        >
-                          <div className="pt-4 border-t border-gray-600">
-                            <p className="text-gray-300 leading-relaxed">
-                              {faq.answer}
-                            </p>
-                          </div>
-                        </motion.div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Quick Help Section */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-gray-800 py-16">
-        <div className="max-w-7xl mx-auto">
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white">
+        <DotsPattern 
+          dotColor="#9ca3af" 
+          dotSize={2.5} 
+          spacing={35} 
+          opacity={0.9}
+          animated={true}
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
           <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-center"
+          >
+            <motion.div
+              variants={itemVariants}
+              animate={{ 
+                rotate: [0, 360],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ 
+                duration: 4, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="mb-6"
+            >
+              <HelpCircle className="w-16 h-16 text-gray-800 mx-auto" />
+            </motion.div>
+            
+            <motion.h1 
+              variants={itemVariants}
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
+            >
+              Frequently Asked <span className="text-black border-b-4 border-gray-400">Questions</span>
+            </motion.h1>
+            
+            <motion.p 
+              variants={itemVariants}
+              className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed"
+            >
+              Find answers to common questions about our services, processes, and how we can help 
+              you succeed in your final year project.
+            </motion.p>
+          </motion.div>
+        </div>
+
+        {/* Enhanced Floating Elements */}
+        <motion.div 
+          className="absolute top-20 left-10 w-20 h-20 bg-gray-300 rounded-full opacity-40"
+          animate={{ 
+            y: [0, -30, 0],
+            rotate: [0, 360],
+            scale: [1, 1.3, 1]
+          }}
+          transition={{ 
+            duration: 6, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-10 w-32 h-32 bg-gray-400 rounded-full opacity-30"
+          animate={{ 
+            y: [0, 40, 0],
+            x: [0, -20, 0],
+            rotateZ: [0, -360]
+          }}
+          transition={{ 
+            duration: 8, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </section>
+
+      {/* Search Section */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 relative">
+        <DotsPattern 
+          dotColor="#d1d5db" 
+          dotSize={1.5} 
+          spacing={40} 
+          opacity={0.5}
+        />
+        
+        <div className="max-w-3xl mx-auto relative z-10">
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-12"
+            className="relative"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Need Quick Help?</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Choose the best way to get in touch with our team for immediate assistance.
-            </p>
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className="h-5 w-5 text-gray-400" />
+            </div>
+            <motion.input
+              type="text"
+              placeholder="Search for answers..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all duration-200 text-lg bg-white shadow-lg"
+              whileFocus={{ scale: 1.02 }}
+            />
           </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="bg-gray-900 rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-shadow duration-300 border border-gray-700"
+          
+          {searchTerm && (
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="mt-4 text-gray-600 text-center"
             >
-              <div className="bg-blue-900/50 p-4 rounded-full w-16 h-16 mx-auto mb-4">
-                <MessageCircle className="w-8 h-8 text-blue-400" />
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Live Chat</h3>
-              <p className="text-gray-300 mb-4">
-                Get instant answers to your questions through our live chat support.
-              </p>
-              <button className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-500 transition-colors">
-                Start Chat
-              </button>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="bg-gray-900 rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-shadow duration-300 border border-gray-700"
-            >
-              <div className="bg-orange-900/50 p-4 rounded-full w-16 h-16 mx-auto mb-4">
-                <Mail className="w-8 h-8 text-orange-400" />
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Email Support</h3>
-              <p className="text-gray-300 mb-4">
-                Send us detailed questions and get comprehensive responses within 24 hours.
-              </p>
-              <a
-                href="mailto:support@thecodelancer.com"
-                className="bg-orange-600 text-white px-6 py-2 rounded-full hover:bg-orange-500 transition-colors"
-              >
-                Send Email
-              </a>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="bg-gray-900 rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-shadow duration-300 border border-gray-700"
-            >
-              <div className="bg-green-900/50 p-4 rounded-full w-16 h-16 mx-auto mb-4">
-                <Phone className="w-8 h-8 text-green-400" />
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Phone Consultation</h3>
-              <p className="text-gray-300 mb-4">
-                Schedule a phone call with our experts for personalized guidance.
-              </p>
-              <Link
-                to="/contact"
-                className="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-500 transition-colors"
-              >
-                Schedule Call
-              </Link>
-            </motion.div>
-          </div>
+              Found {filteredQuestions.length} result(s) for "{searchTerm}"
+            </motion.p>
+          )}
         </div>
       </section>
 
-      {/* Still Have Questions */}
-      <section className="px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-orange-500 py-16">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* FAQ Content */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white relative">
+        <DotsPattern 
+          dotColor="#f3f4f6" 
+          dotSize={1.8} 
+          spacing={45} 
+          opacity={0.6}
+        />
+        
+        <div className="max-w-4xl mx-auto relative z-10">
+          {searchTerm ? (
+            /* Search Results */
+            <div className="space-y-4">
+              {filteredQuestions.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-gray-50 rounded-2xl border border-gray-200 shadow-lg overflow-hidden"
+                >
+                  <motion.button
+                    onClick={() => toggleItem(item.id)}
+                    className="w-full px-6 py-4 text-left focus:outline-none focus:ring-4 focus:ring-gray-100 transition-all duration-200"
+                    whileHover={{ backgroundColor: "#f9fafb" }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-sm font-medium text-gray-500 mb-1 block">{item.category}</span>
+                        <h3 className="text-lg font-semibold text-gray-900 pr-8">{item.q}</h3>
+                      </div>
+                      <motion.div
+                        animate={{ rotate: openItems.includes(item.id) ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {openItems.includes(item.id) ? 
+                          <Minus className="w-5 h-5 text-gray-600" /> : 
+                          <Plus className="w-5 h-5 text-gray-600" />
+                        }
+                      </motion.div>
+                    </div>
+                  </motion.button>
+                  
+                  <AnimatePresence>
+                    {openItems.includes(item.id) && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-6 pb-4 text-gray-700 leading-relaxed">
+                          {item.a}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            /* Categories */
+            <div className="space-y-12">
+              {faqData.map((category, categoryIndex) => (
+                <motion.div
+                  key={categoryIndex}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: categoryIndex * 0.1 }}
+                >
+                  <motion.h2 
+                    className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b-2 border-gray-200"
+                    whileHover={{ x: 10 }}
+                  >
+                    {category.category}
+                  </motion.h2>
+                  
+                  <div className="space-y-4">
+                    {category.questions.map((item, qIndex) => {
+                      const itemId = categoryIndex * 100 + qIndex;
+                      return (
+                        <motion.div
+                          key={itemId}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.5, delay: qIndex * 0.1 }}
+                          whileHover={{ 
+                            scale: 1.01,
+                            boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)"
+                          }}
+                          className="bg-gray-50 rounded-2xl border border-gray-200 shadow-lg overflow-hidden"
+                        >
+                          <motion.button
+                            onClick={() => toggleItem(itemId)}
+                            className="w-full px-6 py-4 text-left focus:outline-none focus:ring-4 focus:ring-gray-100 transition-all duration-200"
+                            whileHover={{ backgroundColor: "#f9fafb" }}
+                          >
+                            <div className="flex items-center justify-between">
+                              <h3 className="text-lg font-semibold text-gray-900 pr-8">{item.q}</h3>
+                              <motion.div
+                                animate={{ rotate: openItems.includes(itemId) ? 180 : 0 }}
+                                transition={{ duration: 0.3 }}
+                              >
+                                {openItems.includes(itemId) ? 
+                                  <Minus className="w-5 h-5 text-gray-600" /> : 
+                                  <Plus className="w-5 h-5 text-gray-600" />
+                                }
+                              </motion.div>
+                            </div>
+                          </motion.button>
+                          
+                          <AnimatePresence>
+                            {openItems.includes(itemId) && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                                className="overflow-hidden"
+                              >
+                                <div className="px-6 pb-4 text-gray-700 leading-relaxed">
+                                  {item.a}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Still have questions section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-black relative overflow-hidden">
+        <DotsPattern 
+          dotColor="#374151" 
+          dotSize={2.5} 
+          spacing={40} 
+          opacity={0.6}
+        />
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                rotate: [0, 5, -5, 0]
+              }}
+              transition={{ 
+                duration: 3, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="mb-6"
+            >
+              <MessageSquare className="w-16 h-16 text-white mx-auto" />
+            </motion.div>
+            
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
               Still Have Questions?
             </h2>
-            <p className="text-xl text-white/90 mb-8">
-              Can't find the answer you're looking for? Our support team is here to help 
-              with any questions about our services or process.
+            <p className="text-xl text-gray-300 mb-8">
+              Can't find what you're looking for? Get in touch with our team and we'll be happy to help.
             </p>
-            <Link
-              to="/contact"
-              className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 inline-flex items-center space-x-2"
-            >
-              <span>Contact Our Team</span>
-              <MessageCircle className="w-5 h-5" />
-            </Link>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  to="/contact"
+                  className="bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-300 inline-flex items-center space-x-2"
+                >
+                  <span>Contact Us</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </motion.div>
+              
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  to="/register"
+                  className="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-black transition-all duration-300 inline-flex items-center space-x-2"
+                >
+                  <span>Start Your Project</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </section>
