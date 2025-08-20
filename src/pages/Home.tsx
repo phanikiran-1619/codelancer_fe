@@ -85,7 +85,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white">
+      <section className="relative py-12 px-4 sm:py-20 sm:px-6 lg:px-8 overflow-hidden bg-white">
         <DotsPattern 
           dotColor="#e5e7eb" 
           dotSize={2} 
@@ -94,7 +94,7 @@ const Home = () => {
           className="absolute inset-0"
         />
         
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="max-w-7xl mx-auto relative z-10 text-center">
           <motion.div 
             variants={containerVariants}
             initial="hidden"
@@ -103,15 +103,15 @@ const Home = () => {
           >
             <motion.h1 
               variants={itemVariants}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6"
             >
-              All the <span className="text-black border-b-4 border-gray-300">CS Innovation</span><br />
+              All the <span className="text-black border-b-4 border-gray-300">CS Innovation</span><br className="hidden sm:block" />
               Power under the Sun
             </motion.h1>
             
             <motion.p 
               variants={itemVariants}
-              className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed"
+              className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed"
             >
               Empower your final year with cutting-edge project development, comprehensive 
               technical documentation, and research paper publishing support. Transform your 
@@ -128,10 +128,10 @@ const Home = () => {
               >
                 <Link
                   to="/register"
-                  className="bg-black text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-300 flex items-center space-x-2 border-2 border-transparent hover:border-gray-300"
+                  className="bg-black text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold hover:shadow-xl transition-all duration-300 flex items-center space-x-2 border-2 border-transparent hover:border-gray-300"
                 >
                   <span>Start Your Journey</span>
-                  <Rocket className="w-5 h-5" />
+                  <Rocket className="w-4 sm:w-5 h-4 sm:h-5" />
                 </Link>
               </motion.div>
               
@@ -141,25 +141,25 @@ const Home = () => {
               >
                 <Link
                   to="/how-it-works"
-                  className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-full text-lg font-semibold hover:border-black hover:text-black hover:shadow-lg transition-all duration-300 flex items-center space-x-2"
+                  className="border-2 border-gray-300 text-gray-700 px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold hover:border-black hover:text-black hover:shadow-lg transition-all duration-300 flex items-center space-x-2"
                 >
                   <span>How It Works</span>
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5" />
                 </Link>
               </motion.div>
             </motion.div>
           </motion.div>
 
-          {/* Animated Icons in Hero Section */}
+          {/* Animated Icons in Hero Section - Hidden on mobile */}
           <motion.div 
-            className="absolute top-20 left-20 w-16 h-16 text-gray-700"
+            className="absolute top-20 left-20 w-12 h-12 text-gray-700 hidden md:block"
             variants={iconVariants}
             animate="animate"
           >
             <Cpu className="w-full h-full" />
           </motion.div>
           <motion.div 
-            className="absolute bottom-20 left-40 w-14 h-14 text-gray-700"
+            className="absolute bottom-20 left-40 w-10 h-10 text-gray-700 hidden md:block"
             variants={iconVariants}
             animate="animate"
             transition={{ duration: 3.5 }}
@@ -167,7 +167,7 @@ const Home = () => {
             <Database className="w-full h-full" />
           </motion.div>
           <motion.div 
-            className="absolute top-40 right-20 w-16 h-16 text-gray-700"
+            className="absolute top-40 right-20 w-12 h-12 text-gray-700 hidden md:block"
             variants={iconVariants}
             animate="animate"
             transition={{ duration: 4 }}
