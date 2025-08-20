@@ -56,15 +56,14 @@ const ChatbotWidget = () => {
       });
 
       const data = await response.json();
-      
-      if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-        return data.candidates[0].content.parts[0].text;
+      if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+        return data.candidates[0].content.parts[0].text.trim();
       } else {
-        throw new Error('Invalid response format');
+        throw new Error('Invalid response format from Gemini API');
       }
     } catch (error) {
       console.error('Gemini API Error:', error);
-      return "I apologize, but I'm having trouble connecting to my knowledge base right now. Please try again later or contact us directly through our contact form.";
+      return "Sorry, I encountered an error. Please try again or contact support.";
     }
   };
 
@@ -78,7 +77,7 @@ const ChatbotWidget = () => {
     setInput("");
     setIsTyping(true);
 
-    // First check if it matches any FAQ
+    // Check if it matches any FAQ
     const lowerCaseInput = userInput.toLowerCase();
     const foundFAQ = faqs.find(faq =>
       faq.q.toLowerCase() === lowerCaseInput ||
@@ -87,25 +86,15 @@ const ChatbotWidget = () => {
     );
 
     let botResponse;
-    
     if (foundFAQ) {
-      // Use FAQ answer
       botResponse = foundFAQ.a;
       setTimeout(() => {
         setMessages((msgs) => [...msgs, { from: "bot", text: botResponse }]);
         setIsTyping(false);
       }, 1000);
     } else {
-      // Use Gemini API for other queries
-      try {
-        botResponse = await callGeminiAPI(userInput);
-        setMessages((msgs) => [...msgs, { from: "bot", text: botResponse }]);
-      } catch (error) {
-        setMessages((msgs) => [...msgs, { 
-          from: "bot", 
-          text: "I'm sorry, I couldn't process your request right now. Please check our FAQ section or contact us directly for assistance." 
-        }]);
-      }
+      botResponse = await callGeminiAPI(userInput);
+      setMessages((msgs) => [...msgs, { from: "bot", text: botResponse }]);
       setIsTyping(false);
     }
   };
@@ -189,10 +178,10 @@ const ChatbotWidget = () => {
             animate="visible"
             exit="exit"
           >
-            <div className="relative w-80 max-w-full h-[70vh] bg-white border-2 border-gray-200 rounded-3xl shadow-2xl flex flex-col overflow-hidden">
+            <div className="relative w-96 max-w-full h-[70vh] bg-white border-2 border-gray-200 rounded-3xl shadow-2xl flex flex-col overflow-hidden">
               {/* Background Dots Pattern */}
               <DotsPattern 
-                dotColor="#f3f4f6" 
+                dotColor="#e5e7eb" 
                 dotSize={1} 
                 spacing={25} 
                 opacity={0.4}
@@ -243,7 +232,7 @@ const ChatbotWidget = () => {
               </div>
               
               {/* Chat Messages Display Area */}
-              <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 relative">
+              <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-gray-50 relative" style={{ minHeight: '300px' }}>
                 <DotsPattern 
                   dotColor="#e5e7eb" 
                   dotSize={1} 
@@ -260,11 +249,12 @@ const ChatbotWidget = () => {
                     className={`flex ${msg.from === "bot" ? "justify-start" : "justify-end"}`}
                   >
                     <div
-                      className={`text-sm p-3 rounded-xl max-w-[85%] shadow-md ${
+                      className={`text-base p-3 rounded-xl max-w-[80%] shadow-md ${
                         msg.from === "bot"
                           ? "bg-white text-gray-800 rounded-bl-none border border-gray-200"
                           : "bg-black text-white rounded-br-none"
                       }`}
+                      style={{ wordWrap: "break-word" }}
                     >
                       {msg.text}
                     </div>
@@ -277,7 +267,7 @@ const ChatbotWidget = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                   >
-                    <div className="bg-white text-gray-700 text-sm p-3 rounded-xl rounded-bl-none border border-gray-200 flex items-center space-x-2">
+                    <div className="bg-white text-gray-700 text-base p-3 rounded-xl rounded-bl-none border border-gray-200 flex items-center space-x-2">
                       <span>AI is thinking</span>
                       <div className="flex space-x-1">
                         <motion.div 

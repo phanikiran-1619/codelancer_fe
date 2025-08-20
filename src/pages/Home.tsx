@@ -10,9 +10,13 @@ import {
   Zap,  
   Rocket,
   CheckCircle,
-  Sparkles
+  Sparkles,
+  Cpu,
+  Database,
+  Globe
 } from 'lucide-react';
 import DotsPattern from '../components/DotsPattern';
+import webVideo from '../assets/web.mp4'; // Import the video from assets
 
 const Home = () => {
   const services = [
@@ -66,6 +70,18 @@ const Home = () => {
     }
   };
 
+  const iconVariants = {
+    animate: {
+      y: [0, -15, 0],
+      rotate: [0, 10, -10, 0],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -74,7 +90,7 @@ const Home = () => {
           dotColor="#e5e7eb" 
           dotSize={2} 
           spacing={35} 
-          opacity={0.5}
+          opacity={0.9}
           className="absolute inset-0"
         />
         
@@ -133,33 +149,32 @@ const Home = () => {
               </motion.div>
             </motion.div>
           </motion.div>
-        </div>
 
-        {/* Floating Elements */}
-        <motion.div 
-          className="absolute top-20 left-10 w-20 h-20 bg-gray-200 rounded-full opacity-30"
-          animate={{ 
-            y: [0, -20, 0],
-            rotate: [0, 180, 360]
-          }}
-          transition={{ 
-            duration: 6, 
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-20 right-10 w-32 h-32 bg-gray-300 rounded-full opacity-20"
-          animate={{ 
-            y: [0, 30, 0],
-            x: [0, -10, 0]
-          }}
-          transition={{ 
-            duration: 8, 
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+          {/* Animated Icons in Hero Section */}
+          <motion.div 
+            className="absolute top-20 left-20 w-16 h-16 text-gray-700"
+            variants={iconVariants}
+            animate="animate"
+          >
+            <Cpu className="w-full h-full" />
+          </motion.div>
+          <motion.div 
+            className="absolute bottom-20 left-40 w-14 h-14 text-gray-700"
+            variants={iconVariants}
+            animate="animate"
+            transition={{ duration: 3.5 }}
+          >
+            <Database className="w-full h-full" />
+          </motion.div>
+          <motion.div 
+            className="absolute top-40 right-20 w-16 h-16 text-gray-700"
+            variants={iconVariants}
+            animate="animate"
+            transition={{ duration: 4 }}
+          >
+            <Globe className="w-full h-full" />
+          </motion.div>
+        </div>
       </section>
 
       {/* Services Section */}
@@ -168,7 +183,7 @@ const Home = () => {
           dotColor="#d1d5db" 
           dotSize={1.5} 
           spacing={45} 
-          opacity={0.4}
+          opacity={0.8}
         />
         
         <div className="max-w-7xl mx-auto relative z-10">
@@ -215,7 +230,7 @@ const Home = () => {
           dotColor="#374151" 
           dotSize={2} 
           spacing={40} 
-          opacity={0.3}
+          opacity={0.7}
         />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -242,7 +257,7 @@ const Home = () => {
           dotColor="#f3f4f6" 
           dotSize={1.5} 
           spacing={50} 
-          opacity={0.5}
+          opacity={0.9}
         />
         
         <div className="max-w-7xl mx-auto relative z-10">
@@ -289,27 +304,24 @@ const Home = () => {
             >
               <div className="bg-gray-50 rounded-2xl p-8 h-96 flex items-center justify-center border border-gray-200 relative overflow-hidden">
                 <DotsPattern 
-                  dotColor="#d1d5db" 
+                  dotColor="#000000ff" 
                   dotSize={1} 
                   spacing={25} 
-                  opacity={0.6}
+                  opacity={0.9}
                 />
-                <div className="text-center relative z-10">
-                  <motion.div
-                    animate={{ 
-                      rotate: [0, 360],
-                      scale: [1, 1.1, 1]
-                    }}
-                    transition={{ 
-                      duration: 4, 
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    <Sparkles className="w-24 h-24 text-gray-800 mx-auto mb-4" />
-                  </motion.div>
-                  <p className="text-lg text-gray-700 font-medium">Innovation Starts Here</p>
-                </div>
+                <motion.video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover rounded-xl"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1 }}
+                >
+                  <source src={webVideo} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </motion.video>
               </div>
             </motion.div>
           </div>
@@ -322,7 +334,7 @@ const Home = () => {
           dotColor="#e5e7eb" 
           dotSize={2} 
           spacing={35} 
-          opacity={0.4}
+          opacity={0.8}
         />
         
         <div className="max-w-4xl mx-auto text-center relative z-10">

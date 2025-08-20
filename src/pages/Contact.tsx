@@ -7,6 +7,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '', // Added phone field
     subject: '',
     message: ''
   });
@@ -262,6 +263,26 @@ const Contact = () => {
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all duration-200 bg-white"
                     placeholder="john@example.com"
+                    required
+                  />
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  whileFocus={{ y: -2, scale: 1.02 }}
+                >
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                    <Phone className="w-4 h-4 inline mr-2" />
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all duration-200 bg-white"
+                    placeholder="+91 1234567890"
                     required
                   />
                 </motion.div>

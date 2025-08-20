@@ -141,6 +141,18 @@ const Footer = () => {
                 </motion.div>
               ))}
             </div>
+            <motion.div
+              className="mt-4"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link
+                to="/login"
+                className="inline-flex items-center px-4 py-2 bg-white text-black text-sm font-semibold rounded-full hover:bg-gray-200 transition-all duration-300 shadow-md hover:shadow-lg border-2 border-transparent hover:border-gray-300"
+              >
+                Login
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
 

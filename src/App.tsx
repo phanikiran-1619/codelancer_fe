@@ -15,6 +15,7 @@ import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
 import Register from './pages/Register';
 import Blog from './pages/Blog';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/register" element={<Register />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/login" element={<Login />} /> {/* Added login route */}
           </Routes>
         </motion.main>
         <Footer />
