@@ -212,10 +212,10 @@ const Home = () => {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-              Ready to Transform Your Final Year?
+              Why Choose thecodelancer?
             </h2>
             <p className="text-xl text-gray-300 mb-8">
-              Start your journey with startup&co_ today.
+              Start your journey with thecodelancer today.
             </p>
             <Link
               to="/register"

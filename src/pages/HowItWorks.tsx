@@ -90,7 +90,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div className="min-h-screen py-20">
+    <div className="min-h-screen py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       {/* Hero Section */}
       <section className="px-4 sm:px-6 lg:px-8 mb-20">
         <div className="max-w-7xl mx-auto text-center">
@@ -98,7 +98,7 @@ const HowItWorks = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
+            className="text-4xl lg:text-5xl font-bold text-white mb-6"
           >
             How It <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">Works</span>
           </motion.h1>
@@ -106,7 +106,7 @@ const HowItWorks = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
+            className="text-xl text-gray-300 max-w-3xl mx-auto"
           >
             A step-by-step journey from initial concept to successful project completion 
             and publication. Here's how we guide you through your final year CS project.
@@ -134,20 +134,20 @@ const HowItWorks = () => {
                       {step.step}
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900">{step.title}</h2>
-                      <span className="text-blue-600 font-medium">{step.duration}</span>
+                      <h2 className="text-2xl font-bold text-white">{step.title}</h2>
+                      <span className="text-blue-400 font-medium">{step.duration}</span>
                     </div>
                   </div>
                   
-                  <p className="text-lg text-gray-600 mb-8">{step.description}</p>
+                  <p className="text-lg text-gray-300 mb-8">{step.description}</p>
                   
                   <div className="mb-6">
-                    <h4 className="font-semibold text-gray-900 mb-3">Deliverables:</h4>
+                    <h4 className="font-semibold text-white mb-3">Deliverables:</h4>
                     <div className="space-y-2">
                       {step.deliverables.map((deliverable, deliverableIndex) => (
                         <div key={deliverableIndex} className="flex items-center space-x-3">
                           <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                          <span className="text-gray-700">{deliverable}</span>
+                          <span className="text-gray-300">{deliverable}</span>
                         </div>
                       ))}
                     </div>
@@ -155,11 +155,11 @@ const HowItWorks = () => {
                 </div>
 
                 <div className={index % 2 === 1 ? 'lg:col-start-1' : ''}>
-                  <div className="bg-gradient-to-br from-blue-50 to-orange-50 rounded-2xl p-8 h-80 flex items-center justify-center">
+                  <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 h-80 flex items-center justify-center border border-gray-600">
                     <div className="text-center">
-                      <div className="text-blue-600 mb-4 flex justify-center">{step.icon}</div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{step.title}</h3>
-                      <p className="text-gray-600">Step {step.step} of 6</p>
+                      <div className="text-blue-400 mb-4 flex justify-center">{step.icon}</div>
+                      <h3 className="text-xl font-semibold text-white mb-2">{step.title}</h3>
+                      <p className="text-gray-300">Step {step.step} of 6</p>
                     </div>
                   </div>
                 </div>
@@ -170,7 +170,7 @@ const HowItWorks = () => {
       </section>
 
       {/* Benefits */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-gray-50 py-16">
+      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-gray-800 py-16">
         <div className="max-w-7xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -178,8 +178,8 @@ const HowItWorks = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Why Our Process Works</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Why Our Process Works</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Our structured approach ensures quality, timely delivery, and Project success.
             </p>
           </motion.div>
@@ -191,11 +191,11 @@ const HowItWorks = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-white rounded-xl p-6 shadow-lg text-center hover:shadow-xl transition-shadow duration-300"
+                className="bg-gray-900 rounded-xl p-6 shadow-lg text-center hover:shadow-xl transition-shadow duration-300 border border-gray-700"
               >
-                <div className="text-blue-600 mb-4 flex justify-center">{benefit.icon}</div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">{benefit.title}</h3>
-                <p className="text-gray-600">{benefit.description}</p>
+                <div className="text-blue-400 mb-4 flex justify-center">{benefit.icon}</div>
+                <h3 className="text-lg font-semibold text-white mb-3">{benefit.title}</h3>
+                <p className="text-gray-300">{benefit.description}</p>
               </motion.div>
             ))}
           </div>
@@ -211,13 +211,13 @@ const HowItWorks = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Project Timeline</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Project Timeline</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Typical timeline for a complete final year CS project with publication.
             </p>
           </motion.div>
 
-          <div className="bg-white rounded-2xl p-8 shadow-lg">
+          <div className="bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-700">
             <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
               {[
                 { phase: "Planning", weeks: "1-2", color: "bg-blue-500" },
@@ -235,8 +235,8 @@ const HowItWorks = () => {
                   className="text-center"
                 >
                   <div className={`${phase.color} h-4 rounded-full mb-3`}></div>
-                  <h4 className="font-semibold text-gray-900 mb-1">{phase.phase}</h4>
-                  <p className="text-sm text-gray-600">{phase.weeks} weeks</p>
+                  <h4 className="font-semibold text-white mb-1">{phase.phase}</h4>
+                  <p className="text-sm text-gray-300">{phase.weeks} weeks</p>
                 </motion.div>
               ))}
             </div>

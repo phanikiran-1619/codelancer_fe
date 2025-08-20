@@ -144,7 +144,7 @@ const FAQ = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-              className="bg-gray-900 rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-shadow duration-300 border border-gray-700"
+            className="text-xl text-gray-300 max-w-3xl mx-auto"
           >
             Find answers to common questions about our services, process, and how we can help 
             you succeed in your final year CS project and research publication journey.
@@ -251,7 +251,7 @@ const FAQ = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="bg-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-shadow duration-300"
+              className="bg-gray-900 rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition-shadow duration-300 border border-gray-700"
             >
               <div className="bg-orange-900/50 p-4 rounded-full w-16 h-16 mx-auto mb-4">
                 <Mail className="w-8 h-8 text-orange-400" />
@@ -261,7 +261,7 @@ const FAQ = () => {
                 Send us detailed questions and get comprehensive responses within 24 hours.
               </p>
               <a
-                href="mailto:support@startupco.com"
+                href="mailto:support@thecodelancer.com"
                 className="bg-orange-600 text-white px-6 py-2 rounded-full hover:bg-orange-500 transition-colors"
               >
                 Send Email

@@ -38,6 +38,7 @@ const About = () => {
             className="text-4xl lg:text-5xl font-bold text-white mb-6"
           >
             About <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">startup&co_</span>
+            About <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">thecodelancer</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 30 }}
@@ -142,7 +143,7 @@ const About = () => {
           >
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Why Students Choose Us</h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              The unique advantages that set startup&co_ apart in CS education support.
+              The unique advantages that set thecodelancer apart in CS education support.
             </p>
           </motion.div>
 

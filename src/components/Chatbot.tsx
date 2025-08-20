@@ -21,10 +21,12 @@ const faqs = [
   { q: "How can I provide feedback on your services?", a: "We welcome feedback! You can share your thoughts via email or through our contact form." },
 ];
 
+const GEMINI_API_KEY = "AIzaSyChltvf-o7OwNtKM2krXj-TbOeE4zPhCOg";
+
 const ChatbotWidget = () => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { from: "bot", text: "Hi! How can I help you today? Please select a question below or type your own." }
+    { from: "bot", text: "Hi! I'm your AI assistant from thecodelancer. How can I help you today? Please select a question below or type your own." }
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -34,8 +36,38 @@ const ChatbotWidget = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Function to call Gemini API
+  const callGeminiAPI = async (userInput: string) => {
+    try {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: `You are a helpful AI assistant for thecodelancer, a company that helps CS students with final year projects, documentation, research papers, and mentoring. Please provide a helpful and relevant response to: ${userInput}. Keep responses concise and professional.`
+            }]
+          }]
+        })
+      });
+
+      const data = await response.json();
+      
+      if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+        return data.candidates[0].content.parts[0].text;
+      } else {
+        throw new Error('Invalid response format');
+      }
+    } catch (error) {
+      console.error('Gemini API Error:', error);
+      return "I apologize, but I'm having trouble connecting to my knowledge base right now. Please try again later or contact us directly through our contact form.";
+    }
+  };
+
   // Handle sending a message (either from input or from FAQ selection)
-  const handleSend = (customInput?: string) => {
+  const handleSend = async (customInput?: string) => {
     const userInput = customInput ?? input;
     if (!userInput.trim()) return;
 
@@ -44,24 +76,41 @@ const ChatbotWidget = () => {
     setInput("");
     setIsTyping(true);
 
-    setTimeout(() => {
-      const lowerCaseInput = userInput.toLowerCase();
-      const found = faqs.find(faq =>
-        faq.q.toLowerCase() === lowerCaseInput ||
-        lowerCaseInput.includes(faq.q.toLowerCase().split(" ")[0])
-      );
+    // First check if it matches any FAQ
+    const lowerCaseInput = userInput.toLowerCase();
+    const foundFAQ = faqs.find(faq =>
+      faq.q.toLowerCase() === lowerCaseInput ||
+      lowerCaseInput.includes(faq.q.toLowerCase().split(" ")[0]) ||
+      faq.q.toLowerCase().includes(lowerCaseInput)
+    );
 
-      setMessages((msgs) => [
-        ...msgs,
-        { from: "bot", text: found ? found.a : "Sorry, I don't have an answer for that. Please check our FAQ or contact us!" }
-      ]);
+    let botResponse;
+    
+    if (foundFAQ) {
+      // Use FAQ answer
+      botResponse = foundFAQ.a;
+      setTimeout(() => {
+        setMessages((msgs) => [...msgs, { from: "bot", text: botResponse }]);
+        setIsTyping(false);
+      }, 1000);
+    } else {
+      // Use Gemini API for other queries
+      try {
+        botResponse = await callGeminiAPI(userInput);
+        setMessages((msgs) => [...msgs, { from: "bot", text: botResponse }]);
+      } catch (error) {
+        setMessages((msgs) => [...msgs, { 
+          from: "bot", 
+          text: "I'm sorry, I couldn't process your request right now. Please check our FAQ section or contact us directly for assistance." 
+        }]);
+      }
       setIsTyping(false);
-    }, 1200);
+    }
   };
 
   const clearChat = () => {
     setMessages([
-      { from: "bot", text: "Hi! How can I help you today? Please select a question below or type your own." }
+      { from: "bot", text: "Hi! I'm your AI assistant from thecodelancer. How can I help you today? Please select a question below or type your own." }
     ]);
   };
 
@@ -100,34 +149,29 @@ const ChatbotWidget = () => {
               <img
                 src="https://t4.ftcdn.net/jpg/03/78/89/75/240_F_378897598_A35SQK2PFGpsA0xJNuW32rhuV5ndZ0sZ.jpg"
                 alt="AI Chatbot Assistant"
-                className="w-32 h-32 rounded-full object-cover shadow-lg border-4 border-white mb-4"
+                className="w-20 h-20 rounded-full object-cover shadow-lg border-4 border-white mb-3"
               />
-              <h2 className="text-2xl font-bold text-white mb-2">Your AI Companion</h2>
-              <p className="text-gray-300 text-center text-sm">How can I assist you today?</p>
+              <h2 className="text-xl font-bold text-white mb-1">thecodelancer AI</h2>
+              <p className="text-gray-300 text-center text-sm">Your CS Project Assistant</p>
               {/* Clear Chat Button */}
               <button
                 onClick={clearChat}
                 className="absolute top-4 left-4 text-gray-400 hover:text-red-400 transition-colors duration-200 p-2 rounded-full hover:bg-gray-600"
                 aria-label="Clear chat"
               >
-                <Trash2 size={24} />
+                <Trash2 size={20} />
               </button>
             </div>
+            
             {/* Chat Messages Display Area */}
-            <div className="flex-1 p-6 overflow-y-auto space-y-4 custom-scrollbar bg-gray-800">
-              <div className="flex justify-start">
-                <div className="relative bg-gray-700 text-gray-200 p-4 rounded-2xl max-w-[80%] shadow-md animate-fade-in-left">
-                  Hi there! 👋 Need a boost?
-                  <div className="absolute left-3 -bottom-2 w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-gray-700 transform rotate-45"></div>
-                </div>
-              </div>
-              {messages.slice(1).map((msg, i) => (
+            <div className="flex-1 p-4 overflow-y-auto space-y-3 custom-scrollbar bg-gray-800">
+              {messages.map((msg, i) => (
                 <div
                   key={i}
                   className={`flex ${msg.from === "bot" ? "justify-start" : "justify-end"}`}
                 >
                   <div
-                    className={`text-sm p-3 rounded-xl max-w-[75%] shadow-sm transform transition-all duration-300 ease-out ${
+                    className={`text-sm p-3 rounded-xl max-w-[85%] shadow-sm transform transition-all duration-300 ease-out ${
                       msg.from === "bot"
                         ? "bg-gray-700 text-gray-200 rounded-bl-none animate-fade-in-left"
                         : "bg-blue-600 text-white rounded-br-none animate-fade-in-right"
@@ -138,23 +182,30 @@ const ChatbotWidget = () => {
                   </div>
                 </div>
               ))}
+              
               {isTyping && (
                 <div className="flex justify-start">
-                  <div className="bg-gray-700 text-gray-300 text-sm p-3 rounded-xl rounded-bl-none animate-pulse">
-                    Typing...
+                  <div className="bg-gray-700 text-gray-300 text-sm p-3 rounded-xl rounded-bl-none animate-pulse flex items-center space-x-1">
+                    <span>AI is thinking</span>
+                    <div className="flex space-x-1">
+                      <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
+                      <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                      <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                    </div>
                   </div>
                 </div>
               )}
+              
               {/* FAQ Options (only show if last message is from bot and it's the welcome message) */}
               {showFaqOptions && (
                 <div className="mt-4">
-                  <div className="font-semibold mb-2 text-gray-300">Popular Questions:</div>
-                  <div className="flex flex-col gap-2">
-                    {faqs.map((faq, idx) => (
+                  <div className="font-semibold mb-2 text-gray-300 text-sm">Popular Questions:</div>
+                  <div className="flex flex-col gap-2 max-h-40 overflow-y-auto">
+                    {faqs.slice(0, 8).map((faq, idx) => (
                       <button
                         key={idx}
                         onClick={() => handleSend(faq.q)}
-                        className="text-left bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-gray-200 hover:bg-gray-600 transition-colors"
+                        className="text-left bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-gray-200 hover:bg-gray-600 transition-colors text-sm"
                       >
                         {faq.q}
                       </button>
@@ -164,21 +215,28 @@ const ChatbotWidget = () => {
               )}
               <div ref={messagesEndRef} />
             </div>
+            
             {/* Message Input Area */}
             <div className="p-4 border-t border-gray-600 flex items-center bg-gray-900 shadow-inner">
               <input
-                className="flex-1 border border-gray-600 bg-gray-700 text-white rounded-full px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 placeholder-gray-400"
+                className="flex-1 border border-gray-600 bg-gray-700 text-white rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 placeholder-gray-400"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                placeholder="Ask me anything..."
+                onKeyDown={(e) => e.key === "Enter" && !isTyping && handleSend()}
+                placeholder="Ask me anything about CS projects..."
+                disabled={isTyping}
               />
               <button
-                className="bg-blue-600 text-white p-3 ml-3 rounded-full flex items-center justify-center shadow-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                onClick={() => handleSend()}
+                className={`p-2 ml-2 rounded-full flex items-center justify-center shadow-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                  isTyping 
+                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
+                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                }`}
+                onClick={() => !isTyping && handleSend()}
+                disabled={isTyping}
                 aria-label="Send message"
               >
-                <Send size={22} />
+                <Send size={18} />
               </button>
             </div>
           </div>
@@ -192,7 +250,7 @@ const ChatbotWidget = () => {
             font-family: 'Inter', sans-serif;
         }
         .custom-scrollbar::-webkit-scrollbar {
-          width: 8px;
+          width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
           background: #374151;
@@ -225,6 +283,13 @@ const ChatbotWidget = () => {
         @keyframes pulse {
           0%, 100% { opacity: 1; }
           50% { opacity: .5; }
+        }
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-4px); }
+        }
+        .animate-bounce {
+          animation: bounce 1s infinite;
         }
       `}</style>
     </div>
