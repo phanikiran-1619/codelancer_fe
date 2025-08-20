@@ -11,9 +11,11 @@ import {
   Brain,
   CheckCircle,
   ArrowRight,
-  Zap
+  Zap,
+  Sparkles
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import DotsPattern from '../components/DotsPattern';
 
 const Services = () => {
   const mainServices = [
@@ -104,40 +106,109 @@ const Services = () => {
     "Deployment Support"
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl lg:text-5xl font-bold text-white mb-6"
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white">
+        <DotsPattern 
+          dotColor="#9ca3af" 
+          dotSize={2.5} 
+          spacing={35} 
+          opacity={0.9}
+          animated={true}
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-center"
           >
-            Our <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">Services</span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-gray-300 max-w-3xl mx-auto"
-          >
-            Comprehensive support for every aspect of your final year CS project, 
-            from initial concept to successful publication and beyond.
-          </motion.p>
+            <motion.h1 
+              variants={itemVariants}
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
+            >
+              Our <span className="text-black border-b-4 border-gray-400">Services</span>
+            </motion.h1>
+            
+            <motion.p 
+              variants={itemVariants}
+              className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed"
+            >
+              Comprehensive support for every aspect of your final year CS project, 
+              from initial concept to successful publication and beyond.
+            </motion.p>
+          </motion.div>
         </div>
+
+        {/* Enhanced Floating Elements */}
+        <motion.div 
+          className="absolute top-20 left-10 w-20 h-20 bg-gray-300 rounded-full opacity-40"
+          animate={{ 
+            y: [0, -30, 0],
+            rotate: [0, 360],
+            scale: [1, 1.3, 1]
+          }}
+          transition={{ 
+            duration: 6, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-10 w-32 h-32 bg-gray-400 rounded-full opacity-30"
+          animate={{ 
+            y: [0, 40, 0],
+            x: [0, -20, 0],
+            rotateZ: [0, -360]
+          }}
+          transition={{ 
+            duration: 8, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
       </section>
 
-      {/* Main Services */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="max-w-7xl mx-auto">
+      {/* Main Services with Enhanced Animations */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 relative">
+        <DotsPattern 
+          dotColor="#d1d5db" 
+          dotSize={2} 
+          spacing={40} 
+          opacity={0.7}
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="space-y-20">
             {mainServices.map((service, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 50, rotateX: -15 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                 transition={{ duration: 0.8 }}
                 className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
                   index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
@@ -145,57 +216,118 @@ const Services = () => {
               >
                 <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
                   <div className="flex items-center mb-6">
-                    <div className="text-blue-400 mr-4">{service.icon}</div>
-                    <h2 className="text-3xl font-bold text-white">{service.title}</h2>
+                    <motion.div 
+                      className="text-gray-800 mr-4"
+                      whileHover={{ 
+                        scale: 1.2,
+                        rotate: [0, 15, -15, 0],
+                        color: "#000"
+                      }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      {service.icon}
+                    </motion.div>
+                    <h2 className="text-3xl font-bold text-gray-900">{service.title}</h2>
                   </div>
                   
-                  <p className="text-lg text-gray-300 mb-8">{service.description}</p>
+                  <p className="text-lg text-gray-700 mb-8">{service.description}</p>
                   
                   <div className="space-y-3 mb-8">
                     {service.features.map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                        <span className="text-gray-300">{feature}</span>
-                      </div>
+                      <motion.div 
+                        key={featureIndex} 
+                        className="flex items-center space-x-3"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: featureIndex * 0.1 }}
+                        whileHover={{ x: 10 }}
+                      >
+                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                        <span className="text-gray-700">{feature}</span>
+                      </motion.div>
                     ))}
                   </div>
 
                   <div className="flex flex-wrap gap-3">
                     {service.technologies.map((tech, techIndex) => (
-                      <div key={techIndex} className="flex items-center space-x-2 bg-gray-700 px-4 py-2 rounded-full">
-                        <div className="w-4 h-4 text-gray-300">{tech.icon}</div>
-                        <span className="text-sm font-medium text-gray-300">{tech.name}</span>
-                      </div>
+                      <motion.div 
+                        key={techIndex} 
+                        className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full shadow-md border border-gray-200"
+                        whileHover={{ 
+                          scale: 1.1,
+                          boxShadow: "0 10px 20px rgba(0, 0, 0, 0.1)",
+                          rotateZ: 5
+                        }}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.4, delay: techIndex * 0.1 }}
+                      >
+                        <div className="w-4 h-4 text-gray-700">{tech.icon}</div>
+                        <span className="text-sm font-medium text-gray-700">{tech.name}</span>
+                      </motion.div>
                     ))}
                   </div>
                 </div>
 
-                <div className={index % 2 === 1 ? 'lg:col-start-1' : ''}>
-                  <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 h-80 flex items-center justify-center border border-gray-600">
-                    <div className="text-center">
-                      <div className="text-blue-400 mb-4 flex justify-center">{service.icon}</div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{service.title}</h3>
-                      <p className="text-gray-300">Professional-grade solutions</p>
+                <motion.div 
+                  className={index % 2 === 1 ? 'lg:col-start-1' : ''}
+                  whileHover={{ 
+                    y: -10,
+                    rotateY: 5,
+                    boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)"
+                  }}
+                >
+                  <div className="bg-white rounded-2xl p-8 h-80 flex items-center justify-center border border-gray-200 shadow-lg relative overflow-hidden">
+                    <DotsPattern 
+                      dotColor="#f3f4f6" 
+                      dotSize={1} 
+                      spacing={20} 
+                      opacity={0.5}
+                    />
+                    <div className="text-center relative z-10">
+                      <motion.div 
+                        className="text-gray-800 mb-4 flex justify-center"
+                        animate={{ 
+                          rotate: [0, 360],
+                          scale: [1, 1.1, 1]
+                        }}
+                        transition={{ 
+                          duration: 4, 
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      >
+                        {service.icon}
+                      </motion.div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{service.title}</h3>
+                      <p className="text-gray-600">Professional-grade solutions</p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Additional Services */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-gray-800 py-16">
-        <div className="max-w-7xl mx-auto">
+      {/* Additional Services with Flip Animation */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white relative">
+        <DotsPattern 
+          dotColor="#e5e7eb" 
+          dotSize={2} 
+          spacing={45} 
+          opacity={0.8}
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Additional Services</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Additional Services</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Complementary services to ensure your complete technical success.
             </p>
           </motion.div>
@@ -204,14 +336,24 @@ const Services = () => {
             {additionalServices.map((service, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-700"
+                initial={{ opacity: 0, rotateY: -90 }}
+                whileInView={{ opacity: 1, rotateY: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ 
+                  y: -5,
+                  boxShadow: "0 15px 30px rgba(0, 0, 0, 0.1)",
+                  rotateX: 5
+                }}
+                className="bg-gray-50 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
               >
                 <div className="flex items-center space-x-3">
-                  <CheckCircle className="w-6 h-6 text-green-500" />
-                  <h3 className="text-lg font-semibold text-white">{service}</h3>
+                  <motion.div
+                    whileHover={{ scale: 1.2, rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <CheckCircle className="w-6 h-6 text-green-600" />
+                  </motion.div>
+                  <h3 className="text-lg font-semibold text-gray-900">{service}</h3>
                 </div>
               </motion.div>
             ))}
@@ -219,9 +361,16 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Process Overview */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="max-w-7xl mx-auto">
+      {/* Process Overview with Advanced Animations */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black relative overflow-hidden">
+        <DotsPattern 
+          dotColor="#374151" 
+          dotSize={2.5} 
+          spacing={40} 
+          opacity={0.6}
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -254,14 +403,27 @@ const Services = () => {
             ].map((step, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30, rotateZ: -10 }}
+                whileInView={{ opacity: 1, y: 0, rotateZ: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.2 }}
+                whileHover={{ 
+                  y: -10,
+                  scale: 1.05,
+                  rotateY: 10
+                }}
                 className="text-center"
               >
-                <div className="bg-gradient-to-r from-blue-600 to-orange-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                <motion.div 
+                  className="bg-white text-black w-16 h-16 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 shadow-lg"
+                  whileHover={{ 
+                    scale: 1.2,
+                    rotate: 360,
+                    boxShadow: "0 0 30px rgba(255, 255, 255, 0.5)"
+                  }}
+                  transition={{ duration: 0.6 }}
+                >
                   {step.step}
-                </div>
+                </motion.div>
                 <h3 className="text-xl font-semibold text-white mb-3">{step.title}</h3>
                 <p className="text-gray-300">{step.description}</p>
               </motion.div>
@@ -271,26 +433,52 @@ const Services = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-orange-500 py-16">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 relative">
+        <DotsPattern 
+          dotColor="#d1d5db" 
+          dotSize={2} 
+          spacing={35} 
+          opacity={0.7}
+        />
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+            <motion.div
+              animate={{ 
+                rotate: [0, 360],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ 
+                duration: 4, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="mb-8"
+            >
+              <Sparkles className="w-16 h-16 text-gray-800 mx-auto" />
+            </motion.div>
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
               Ready to Start Your Project?
             </h2>
-            <p className="text-xl text-white/90 mb-8">
+            <p className="text-xl text-gray-600 mb-8">
               Let's discuss your requirements and create something amazing together.
             </p>
-            <Link
-              to="/contact"
-              className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 inline-flex items-center space-x-2"
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <span>Get Started Today</span>
-              <ArrowRight className="w-5 h-5" />
-            </Link>
+              <Link
+                to="/contact"
+                className="bg-black text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-300 inline-flex items-center space-x-2"
+              >
+                <span>Get Started Today</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </section>

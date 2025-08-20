@@ -6,14 +6,16 @@ interface DotsPatternProps {
   dotSize?: number;
   spacing?: number;
   opacity?: number;
+  animated?: boolean;
 }
 
 const DotsPattern: React.FC<DotsPatternProps> = ({
   className = "",
-  dotColor = "#e5e7eb",
+  dotColor = "#6b7280", // Much brighter default color
   dotSize = 2,
   spacing = 30,
-  opacity = 0.4
+  opacity = 0.8, // Increased opacity for brightness
+  animated = false
 }) => {
   const patternId = `dots-pattern-${Math.random().toString(36).substr(2, 9)}`;
   
@@ -38,6 +40,7 @@ const DotsPattern: React.FC<DotsPatternProps> = ({
               r={dotSize}
               fill={dotColor}
               opacity={opacity}
+              className={animated ? "animate-pulse" : ""}
             />
           </pattern>
         </defs>

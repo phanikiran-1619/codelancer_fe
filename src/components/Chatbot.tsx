@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import { MessageSquare, X, Send, Trash2 } from "lucide-react";
+import { MessageSquare, X, Send, Trash2, Bot } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import DotsPattern from './DotsPattern';
 
 const faqs = [
   { q: "What services do you offer?", a: "We offer project development, documentation, research paper writing, and mentoring for CS students." },
   { q: "How do I start my project?", a: "Click the 'Start Your Project' button or contact us via the contact form." },
   { q: "Can you help with IEEE papers?", a: "Yes, we provide support for IEEE standard documentation and publication." },
   { q: "Where are you located?", a: "We are based in Vijayawada, Andhra Pradesh, India, but serve students everywhere." },
-  { q: "How can I contact you?", a: "You can reach us through the contact form on our website or via email or contact number provided in the below footer." },
+  { q: "How can I contact you?", a: "You can reach us through the contact form on our website or via email or contact number provided in the footer." },
   { q: "Do you offer mentoring?", a: "Yes, we provide mentoring for B.Tech and M.Tech students in their projects." },
   { q: "Can you help with project documentation?", a: "Absolutely! We assist with complete project documentation, including IEEE standards." },
   { q: "What is your response time?", a: "We typically respond within 24 hours on business days." },
@@ -17,7 +19,7 @@ const faqs = [
   { q: "How do I submit my project requirements?", a: "You can submit your requirements through the contact form or by emailing us directly." },
   { q: "What technologies do you work with?", a: "We work with various technologies including Python, Java, C++, and web development frameworks." },
   { q: "Can you help with final year projects?", a: "Yes, we specialize in final year projects for B.Tech and M.Tech students." },
-  { q: "Do you offer any discounts for students?", a: "Yes, we offer special discounts for students. Please inquire for more details and contact to Program director- Mr.Dheeraj Donepudi" },
+  { q: "Do you offer any discounts for students?", a: "Yes, we offer special discounts for students. Please inquire for more details and contact Program director- Mr.Dheeraj Donepudi" },
   { q: "How can I provide feedback on your services?", a: "We welcome feedback! You can share your thoughts via email or through our contact form." },
 ];
 
@@ -66,7 +68,7 @@ const ChatbotWidget = () => {
     }
   };
 
-  // Handle sending a message (either from input or from FAQ selection)
+  // Handle sending a message
   const handleSend = async (customInput?: string) => {
     const userInput = customInput ?? input;
     if (!userInput.trim()) return;
@@ -117,181 +119,249 @@ const ChatbotWidget = () => {
   // Show FAQ options only if it's the first message or after clearing chat
   const showFaqOptions = messages.length === 1;
 
+  const chatbotVariants = {
+    hidden: { 
+      opacity: 0, 
+      scale: 0.3,
+      rotateX: -90
+    },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      rotateX: 0,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30
+      }
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.3,
+      rotateX: 90,
+      transition: {
+        duration: 0.3
+      }
+    }
+  };
+
+  const buttonVariants = {
+    idle: { 
+      scale: 1,
+      rotate: 0,
+      boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)"
+    },
+    hover: { 
+      scale: 1.1,
+      rotate: 360,
+      boxShadow: "0 15px 40px rgba(0, 0, 0, 0.3)"
+    },
+    tap: { scale: 0.9 }
+  };
+
   return (
-    <div className="font-inter">
-      {/* Floating Chatbot Toggle Button - Bottom Right */}
-      <button
+    <div>
+      {/* Floating Chatbot Toggle Button with Enhanced Animation */}
+      <motion.button
+        variants={buttonVariants}
+        initial="idle"
+        whileHover="hover"
+        whileTap="tap"
         onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-6 right-6 bg-gradient-to-r from-blue-600 to-purple-700 text-white rounded-full p-4 shadow-xl z-50 transform transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-blue-300"
+        className="fixed bottom-6 right-6 bg-black text-white rounded-full p-4 z-50 focus:outline-none"
         aria-label="Open chatbot"
       >
-        <MessageSquare size={28} />
-      </button>
+        <motion.div
+          animate={open ? { rotate: 180 } : { rotate: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {open ? <X size={28} /> : <MessageSquare size={28} />}
+        </motion.div>
+      </motion.button>
 
-      {/* Chatbot Modal - Bottom Right */}
-      {open && (
-        <div className="fixed bottom-24 right-6 z-[100] transition-opacity duration-300">
-          <div
-            className="relative w-80 max-w-full h-[70vh] bg-gray-900 border border-gray-700 rounded-3xl shadow-2xl flex flex-col overflow-hidden"
-            style={{ transformOrigin: "bottom right" }}
+      {/* Chatbot Modal with Enhanced Design */}
+      <AnimatePresence>
+        {open && (
+          <motion.div 
+            className="fixed bottom-24 right-6 z-[100]"
+            variants={chatbotVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
           >
-            {/* Chatbot Header */}
-            <div className="p-6 pb-4 bg-gradient-to-br from-gray-800 to-gray-700 flex flex-col items-center justify-center rounded-t-3xl relative border-b border-gray-600">
-              {/* Close Button */}
-              <button
-                onClick={() => setOpen(false)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-200 transition-colors duration-200 p-2 rounded-full hover:bg-gray-600"
-                aria-label="Close chatbot"
-              >
-                <X size={24} />
-              </button>
-              {/* Robot Character Image */}
-              <img
-                src="https://t4.ftcdn.net/jpg/03/78/89/75/240_F_378897598_A35SQK2PFGpsA0xJNuW32rhuV5ndZ0sZ.jpg"
-                alt="AI Chatbot Assistant"
-                className="w-20 h-20 rounded-full object-cover shadow-lg border-4 border-white mb-3"
+            <div className="relative w-80 max-w-full h-[70vh] bg-white border-2 border-gray-200 rounded-3xl shadow-2xl flex flex-col overflow-hidden">
+              {/* Background Dots Pattern */}
+              <DotsPattern 
+                dotColor="#f3f4f6" 
+                dotSize={1} 
+                spacing={25} 
+                opacity={0.4}
               />
-              <h2 className="text-xl font-bold text-white mb-1">thecodelancer AI</h2>
-              <p className="text-gray-300 text-center text-sm">Your CS Project Assistant</p>
-              {/* Clear Chat Button */}
-              <button
-                onClick={clearChat}
-                className="absolute top-4 left-4 text-gray-400 hover:text-red-400 transition-colors duration-200 p-2 rounded-full hover:bg-gray-600"
-                aria-label="Clear chat"
-              >
-                <Trash2 size={20} />
-              </button>
-            </div>
-            
-            {/* Chat Messages Display Area */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-3 custom-scrollbar bg-gray-800">
-              {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`flex ${msg.from === "bot" ? "justify-start" : "justify-end"}`}
+              
+              {/* Chatbot Header with New Design */}
+              <div className="relative p-6 pb-4 bg-white flex flex-col items-center justify-center rounded-t-3xl border-b-2 border-gray-100">
+                {/* Close Button */}
+                <motion.button
+                  onClick={() => setOpen(false)}
+                  className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors duration-200 p-2 rounded-full hover:bg-gray-100"
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
+                  aria-label="Close chatbot"
                 >
-                  <div
-                    className={`text-sm p-3 rounded-xl max-w-[85%] shadow-sm transform transition-all duration-300 ease-out ${
-                      msg.from === "bot"
-                        ? "bg-gray-700 text-gray-200 rounded-bl-none animate-fade-in-left"
-                        : "bg-blue-600 text-white rounded-br-none animate-fade-in-right"
-                    }`}
-                    style={{ animationDelay: `${i * 0.05}s` }}
-                  >
-                    {msg.text}
-                  </div>
-                </div>
-              ))}
-              
-              {isTyping && (
-                <div className="flex justify-start">
-                  <div className="bg-gray-700 text-gray-300 text-sm p-3 rounded-xl rounded-bl-none animate-pulse flex items-center space-x-1">
-                    <span>AI is thinking</span>
-                    <div className="flex space-x-1">
-                      <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                      <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                    </div>
-                  </div>
-                </div>
-              )}
-              
-              {/* FAQ Options (only show if last message is from bot and it's the welcome message) */}
-              {showFaqOptions && (
-                <div className="mt-4">
-                  <div className="font-semibold mb-2 text-gray-300 text-sm">Popular Questions:</div>
-                  <div className="flex flex-col gap-2 max-h-40 overflow-y-auto">
-                    {faqs.slice(0, 8).map((faq, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => handleSend(faq.q)}
-                        className="text-left bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-gray-200 hover:bg-gray-600 transition-colors text-sm"
-                      >
-                        {faq.q}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-            
-            {/* Message Input Area */}
-            <div className="p-4 border-t border-gray-600 flex items-center bg-gray-900 shadow-inner">
-              <input
-                className="flex-1 border border-gray-600 bg-gray-700 text-white rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 placeholder-gray-400"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && !isTyping && handleSend()}
-                placeholder="Ask me anything about CS projects..."
-                disabled={isTyping}
-              />
-              <button
-                className={`p-2 ml-2 rounded-full flex items-center justify-center shadow-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                  isTyping 
-                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
-                    : 'bg-blue-600 text-white hover:bg-blue-700'
-                }`}
-                onClick={() => !isTyping && handleSend()}
-                disabled={isTyping}
-                aria-label="Send message"
-              >
-                <Send size={18} />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+                  <X size={24} />
+                </motion.button>
 
-      {/* Custom CSS for scrollbar and animations */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        .font-inter {
-            font-family: 'Inter', sans-serif;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: #374151;
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #6b7280;
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #9ca3af;
-        }
-        @keyframes fade-in-left {
-          from { opacity: 0; transform: translateX(-10px);}
-          to { opacity: 1; transform: translateX(0);}
-        }
-        @keyframes fade-in-right {
-          from { opacity: 0; transform: translateX(10px);}
-          to { opacity: 1; transform: translateX(0);}
-        }
-        .animate-fade-in-left {
-          animation: fade-in-left 0.3s ease-out forwards;
-        }
-        .animate-fade-in-right {
-          animation: fade-in-right 0.3s ease-out forwards;
-        }
-        .animate-pulse {
-          animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: .5; }
-        }
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-4px); }
-        }
-        .animate-bounce {
-          animation: bounce 1s infinite;
-        }
-      `}</style>
+                {/* Bot Avatar with Animation */}
+                <motion.div
+                  animate={{ 
+                    rotate: [0, 10, -10, 0],
+                    scale: [1, 1.05, 1]
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="w-16 h-16 bg-black rounded-full flex items-center justify-center shadow-lg mb-3"
+                >
+                  <Bot className="w-8 h-8 text-white" />
+                </motion.div>
+                
+                <h2 className="text-xl font-bold text-gray-900 mb-1">thecodelancer AI</h2>
+                <p className="text-gray-600 text-center text-sm">Your CS Project Assistant</p>
+                
+                {/* Clear Chat Button */}
+                <motion.button
+                  onClick={clearChat}
+                  className="absolute top-4 left-4 text-gray-500 hover:text-red-500 transition-colors duration-200 p-2 rounded-full hover:bg-gray-100"
+                  whileHover={{ scale: 1.1, rotate: -90 }}
+                  whileTap={{ scale: 0.9 }}
+                  aria-label="Clear chat"
+                >
+                  <Trash2 size={20} />
+                </motion.button>
+              </div>
+              
+              {/* Chat Messages Display Area */}
+              <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 relative">
+                <DotsPattern 
+                  dotColor="#e5e7eb" 
+                  dotSize={1} 
+                  spacing={30} 
+                  opacity={0.3}
+                />
+                
+                {messages.map((msg, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.4, delay: i * 0.05 }}
+                    className={`flex ${msg.from === "bot" ? "justify-start" : "justify-end"}`}
+                  >
+                    <div
+                      className={`text-sm p-3 rounded-xl max-w-[85%] shadow-md ${
+                        msg.from === "bot"
+                          ? "bg-white text-gray-800 rounded-bl-none border border-gray-200"
+                          : "bg-black text-white rounded-br-none"
+                      }`}
+                    >
+                      {msg.text}
+                    </div>
+                  </motion.div>
+                ))}
+                
+                {isTyping && (
+                  <motion.div 
+                    className="flex justify-start"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <div className="bg-white text-gray-700 text-sm p-3 rounded-xl rounded-bl-none border border-gray-200 flex items-center space-x-2">
+                      <span>AI is thinking</span>
+                      <div className="flex space-x-1">
+                        <motion.div 
+                          className="w-2 h-2 bg-gray-500 rounded-full"
+                          animate={{ y: [0, -8, 0] }}
+                          transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
+                        />
+                        <motion.div 
+                          className="w-2 h-2 bg-gray-500 rounded-full"
+                          animate={{ y: [0, -8, 0] }}
+                          transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
+                        />
+                        <motion.div 
+                          className="w-2 h-2 bg-gray-500 rounded-full"
+                          animate={{ y: [0, -8, 0] }}
+                          transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
+                        />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+                
+                {/* FAQ Options */}
+                {showFaqOptions && (
+                  <motion.div 
+                    className="mt-4 relative z-10"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <div className="font-semibold mb-2 text-gray-700 text-sm">Popular Questions:</div>
+                    <div className="flex flex-col gap-2 max-h-40 overflow-y-auto">
+                      {faqs.slice(0, 8).map((faq, idx) => (
+                        <motion.button
+                          key={idx}
+                          onClick={() => handleSend(faq.q)}
+                          className="text-left bg-white border-2 border-gray-200 rounded-lg px-3 py-2 text-gray-800 hover:bg-gray-50 hover:border-gray-300 transition-all text-sm shadow-sm"
+                          whileHover={{ 
+                            scale: 1.02,
+                            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
+                          }}
+                          whileTap={{ scale: 0.98 }}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: idx * 0.1 }}
+                        >
+                          {faq.q}
+                        </motion.button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+              
+              {/* Message Input Area */}
+              <div className="p-4 border-t-2 border-gray-100 flex items-center bg-white">
+                <input
+                  className="flex-1 border-2 border-gray-200 bg-gray-50 text-gray-800 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all duration-200 placeholder-gray-500"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && !isTyping && handleSend()}
+                  placeholder="Ask me anything about CS projects..."
+                  disabled={isTyping}
+                />
+                <motion.button
+                  className={`p-2 ml-2 rounded-full flex items-center justify-center transition-all duration-200 focus:outline-none ${
+                    isTyping 
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
+                      : 'bg-black text-white hover:bg-gray-800'
+                  }`}
+                  onClick={() => !isTyping && handleSend()}
+                  disabled={isTyping}
+                  whileHover={!isTyping ? { scale: 1.05 } : {}}
+                  whileTap={!isTyping ? { scale: 0.95 } : {}}
+                  aria-label="Send message"
+                >
+                  <Send size={18} />
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
