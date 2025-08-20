@@ -14,6 +14,7 @@ const Footer = () => {
                 <Code className="w-5 h-5 text-white" />
               </div>
               <span className="text-lg font-bold">startup&co_</span>
+              <span className="text-lg font-bold">thecodelancer</span>
             </div>
             <p className="text-gray-400 text-sm mb-4">
               Empowering final year CS students with innovative project development, 
@@ -81,7 +82,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
           <p className="text-gray-400 text-sm">
-            © 2025 startup&co_. All rights reserved. Empowering the next generation of CS innovators.
+            © 2025 thecodelancer. All rights reserved. Empowering the next generation of CS innovators.
           </p>
         </div>
       </div>

@@ -105,7 +105,7 @@ const ProjectsGallery = () => {
     : projects.filter(project => project.category === activeFilter);
 
   return (
-    <div className="min-h-screen py-20">
+    <div className="min-h-screen py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       {/* Hero Section */}
       <section className="px-4 sm:px-6 lg:px-8 mb-20">
         <div className="max-w-7xl mx-auto text-center">
@@ -113,7 +113,7 @@ const ProjectsGallery = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
+            className="text-4xl lg:text-5xl font-bold text-white mb-6"
           >
             Projects <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">Gallery</span>
           </motion.h1>
@@ -121,7 +121,7 @@ const ProjectsGallery = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
+            className="text-xl text-gray-300 max-w-3xl mx-auto"
           >
             Showcase of innovative final year projects developed by our students. 
             From AI-powered solutions to cutting-edge IoT systems, discover what's possible.
@@ -140,7 +140,7 @@ const ProjectsGallery = () => {
                 className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                   activeFilter === category
                     ? 'bg-gradient-to-r from-blue-600 to-orange-500 text-white shadow-lg'
-                    : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-500 hover:text-blue-600'
+                    : 'bg-gray-800 text-gray-300 border border-gray-600 hover:border-blue-500 hover:text-blue-400'
                 }`}
               >
                 {category}
@@ -160,7 +160,7 @@ const ProjectsGallery = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                className="bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-gray-700"
               >
                 <div className="relative">
                   <img 
@@ -190,56 +190,56 @@ const ProjectsGallery = () => {
                 </div>
 
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">{project.title}</h3>
-                  <p className="text-gray-600 mb-4 line-clamp-3">{project.description}</p>
+                  <h3 className="text-xl font-bold text-white mb-3">{project.title}</h3>
+                  <p className="text-gray-300 mb-4 line-clamp-3">{project.description}</p>
 
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.slice(0, 3).map((tech, techIndex) => (
                       <span
                         key={techIndex}
-                        className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
+                        className="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm"
                       >
                         {tech}
                       </span>
                     ))}
                     {project.technologies.length > 3 && (
-                      <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
+                      <span className="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm">
                         +{project.technologies.length - 3} more
                       </span>
                     )}
                   </div>
 
-                  <div className="border-t pt-4">
+                  <div className="border-t border-gray-700 pt-4">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center space-x-2">
-                        <Users className="w-4 h-4 text-gray-500" />
-                        <span className="text-sm text-gray-700">{project.student}</span>
+                        <Users className="w-4 h-4 text-gray-400" />
+                        <span className="text-sm text-gray-300">{project.student}</span>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Calendar className="w-4 h-4 text-gray-500" />
-                        <span className="text-sm text-gray-700">{project.year}</span>
+                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <span className="text-sm text-gray-300">{project.year}</span>
                       </div>
                     </div>
 
-                    <div className="text-sm text-gray-600 mb-3">{project.university}</div>
+                    <div className="text-sm text-gray-400 mb-3">{project.university}</div>
 
                     {project.awards.length > 0 && (
                       <div className="flex items-center space-x-2 mb-3">
                         <Award className="w-4 h-4 text-yellow-500" />
-                        <span className="text-sm text-gray-700">{project.awards[0]}</span>
+                        <span className="text-sm text-gray-300">{project.awards[0]}</span>
                       </div>
                     )}
 
                     <div className="flex space-x-3">
                       <a
                         href={project.paperUrl}
-                        className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
+                        className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors"
                       >
                         View Paper
                       </a>
                       <a
                         href={project.liveUrl}
-                        className="text-orange-600 hover:text-orange-800 text-sm font-medium transition-colors"
+                        className="text-orange-400 hover:text-orange-300 text-sm font-medium transition-colors"
                       >
                         Live Demo
                       </a>
@@ -259,7 +259,8 @@ const ProjectsGallery = () => {
             {[
               { number: "10+", label: "Projects Completed" },
               { number: "10+", label: "Papers Published" },
-              
+              { number: "95%", label: "Success Rate" },
+              { number: "50+", label: "Happy Students" }
             ].map((stat, index) => (
               <motion.div
                 key={index}
@@ -284,10 +285,10 @@ const ProjectsGallery = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
               Ready to Create Your Own Success Story?
             </h2>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-gray-300 mb-8">
               Join the ranks of successful students who have transformed their ideas 
               into award-winning projects and published research.
             </p>

@@ -111,7 +111,7 @@ const PublishPaper = () => {
   ];
 
   return (
-    <div className="min-h-screen py-20">
+    <div className="min-h-screen py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       {/* Hero Section */}
       <section className="px-4 sm:px-6 lg:px-8 mb-20">
         <div className="max-w-7xl mx-auto text-center">
@@ -119,7 +119,7 @@ const PublishPaper = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
+            className="text-4xl lg:text-5xl font-bold text-white mb-6"
           >
             Publish Your <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">Research</span>
           </motion.h1>
@@ -127,7 +127,7 @@ const PublishPaper = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-gray-600 max-w-3xl mx-auto mb-8"
+            className="text-xl text-gray-300 max-w-3xl mx-auto mb-8"
           >
             Transform your final year project into a published research paper. 
             Get expert guidance on academic writing, peer review, and publication 
@@ -158,8 +158,8 @@ const PublishPaper = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Publication Process</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Publication Process</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Our systematic approach to getting your research published in reputable venues.
             </p>
           </motion.div>
@@ -171,16 +171,16 @@ const PublishPaper = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-700"
               >
                 <div className="flex items-center mb-4">
                   <div className="bg-gradient-to-r from-blue-600 to-orange-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold mr-4">
                     {step.step}
                   </div>
-                  <div className="text-blue-600">{step.icon}</div>
+                  <div className="text-blue-400">{step.icon}</div>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">{step.title}</h3>
-                <p className="text-gray-600">{step.description}</p>
+                <h3 className="text-xl font-semibold text-white mb-3">{step.title}</h3>
+                <p className="text-gray-300">{step.description}</p>
               </motion.div>
             ))}
           </div>
@@ -188,7 +188,7 @@ const PublishPaper = () => {
       </section>
 
       {/* Publication Types */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-gray-50 py-16">
+      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-gray-800 py-16">
         <div className="max-w-7xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -196,8 +196,8 @@ const PublishPaper = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Publication Options</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Publication Options</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Choose the best publication venue for your research based on timeline, impact, and career goals.
             </p>
           </motion.div>
@@ -209,34 +209,34 @@ const PublishPaper = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-700"
               >
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">{type.type}</h3>
-                <p className="text-gray-600 mb-6">{type.description}</p>
+                <h3 className="text-2xl font-bold text-white mb-4">{type.type}</h3>
+                <p className="text-gray-300 mb-6">{type.description}</p>
                 
                 <div className="mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-3">Target Venues:</h4>
+                  <h4 className="font-semibold text-white mb-3">Target Venues:</h4>
                   <ul className="space-y-2">
                     {type.venues.map((venue, venueIndex) => (
-                      <li key={venueIndex} className="text-gray-700 text-sm">• {venue}</li>
+                      <li key={venueIndex} className="text-gray-300 text-sm">• {venue}</li>
                     ))}
                   </ul>
                 </div>
 
                 <div className="mb-6">
                   <div className="flex items-center space-x-2 mb-2">
-                    <Calendar className="w-5 h-5 text-blue-600" />
-                    <span className="font-semibold text-gray-900">Timeline: {type.timeline}</span>
+                    <Calendar className="w-5 h-5 text-blue-400" />
+                    <span className="font-semibold text-white">Timeline: {type.timeline}</span>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-3">Benefits:</h4>
+                  <h4 className="font-semibold text-white mb-3">Benefits:</h4>
                   <div className="space-y-2">
                     {type.benefits.map((benefit, benefitIndex) => (
                       <div key={benefitIndex} className="flex items-center space-x-2">
                         <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-                        <span className="text-gray-700 text-sm">{benefit}</span>
+                        <span className="text-gray-300 text-sm">{benefit}</span>
                       </div>
                     ))}
                   </div>
@@ -256,8 +256,8 @@ const PublishPaper = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Success Stories</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Success Stories</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Recent publications by our students in top-tier conferences and journals.
             </p>
           </motion.div>
@@ -269,16 +269,16 @@ const PublishPaper = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-6 shadow-lg"
+                className="bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-700"
               >
                 <div className="flex items-center mb-4">
                   <Star className="w-6 h-6 text-yellow-500 mr-2" />
-                  <span className="text-sm text-gray-600">{story.year}</span>
+                  <span className="text-sm text-gray-400">{story.year}</span>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{story.title}</h3>
-                <p className="text-blue-600 font-medium mb-2">{story.student}</p>
-                <p className="text-gray-600 text-sm mb-3">{story.publication}</p>
-                <div className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium inline-block">
+                <h3 className="text-lg font-semibold text-white mb-2">{story.title}</h3>
+                <p className="text-blue-400 font-medium mb-2">{story.student}</p>
+                <p className="text-gray-300 text-sm mb-3">{story.publication}</p>
+                <div className="bg-green-900/50 text-green-400 px-3 py-1 rounded-full text-sm font-medium inline-block">
                   {story.impact}
                 </div>
               </motion.div>
@@ -288,7 +288,7 @@ const PublishPaper = () => {
       </section>
 
       {/* Requirements */}
-      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-blue-50 py-16">
+      <section className="px-4 sm:px-6 lg:px-8 mb-20 bg-gray-800 py-16">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -296,10 +296,10 @@ const PublishPaper = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
                 Publication Requirements
               </h2>
-              <p className="text-lg text-gray-600 mb-8">
+              <p className="text-lg text-gray-300 mb-8">
                 To ensure successful publication, your project should meet these key criteria.
               </p>
               
@@ -307,7 +307,7 @@ const PublishPaper = () => {
                 {requirements.map((requirement, index) => (
                   <div key={index} className="flex items-start space-x-3">
                     <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0 mt-1" />
-                    <span className="text-gray-700">{requirement}</span>
+                    <span className="text-gray-300">{requirement}</span>
                   </div>
                 ))}
               </div>
@@ -317,42 +317,42 @@ const PublishPaper = () => {
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="bg-white rounded-2xl p-8 shadow-lg"
+              className="bg-gray-900 rounded-2xl p-8 shadow-lg border border-gray-700"
             >
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Get Started Today</h3>
-              <p className="text-gray-600 mb-6">
+              <h3 className="text-2xl font-bold text-white mb-6">Get Started Today</h3>
+              <p className="text-gray-300 mb-6">
                 Ready to publish your research? Contact us for a free consultation 
                 and publication assessment.
               </p>
               
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                    <BookOpen className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-blue-900/50 rounded-full flex items-center justify-center">
+                    <BookOpen className="w-6 h-6 text-blue-400" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">Free Assessment</h4>
-                    <p className="text-gray-600 text-sm">Evaluate your project's publication potential</p>
+                    <h4 className="font-semibold text-white">Free Assessment</h4>
+                    <p className="text-gray-300 text-sm">Evaluate your project's publication potential</p>
                   </div>
                 </div>
                 
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                    <Users className="w-6 h-6 text-orange-600" />
+                  <div className="w-12 h-12 bg-orange-900/50 rounded-full flex items-center justify-center">
+                    <Users className="w-6 h-6 text-orange-400" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">Expert Guidance</h4>
-                    <p className="text-gray-600 text-sm">Work with experienced research mentors</p>
+                    <h4 className="font-semibold text-white">Expert Guidance</h4>
+                    <p className="text-gray-300 text-sm">Work with experienced research mentors</p>
                   </div>
                 </div>
                 
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                    <Award className="w-6 h-6 text-green-600" />
+                  <div className="w-12 h-12 bg-green-900/50 rounded-full flex items-center justify-center">
+                    <Award className="w-6 h-6 text-green-400" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">Publication Success</h4>
-                    <p className="text-gray-600 text-sm">95% success rate in top venues</p>
+                    <h4 className="font-semibold text-white">Publication Success</h4>
+                    <p className="text-gray-300 text-sm">95% success rate in top venues</p>
                   </div>
                 </div>
               </div>
@@ -391,10 +391,10 @@ const PublishPaper = () => {
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <a
-                href="mailto:publish@startupco.com"
+                href="mailto:publish@thecodelancer.com"
                 className="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300"
               >
-                publish@startupco.com
+                publish@thecodelancer.com
               </a>
             </div>
           </motion.div>
