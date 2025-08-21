@@ -17,7 +17,6 @@ const Header = () => {
     { name: 'Projects', path: '/projects' },
     { name: 'Publish Paper', path: '/publish' },
     { name: 'FAQ', path: '/faq' },
-    { name: 'Contact', path: '/contact' },
   ];
 
   useEffect(() => {
