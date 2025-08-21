@@ -35,7 +35,7 @@ const Header = () => {
       opacity: 1,
       transition: {
         duration: 0.6,
-        ease: [0.6, 0.05, 0.1, 0.9] // Smoother easing for navbar entry
+        ease: [0.6, 0.05, 0.1, 0.9]
       }
     }
   };
@@ -64,7 +64,7 @@ const Header = () => {
       opacity: 1,
       transition: {
         duration: 0.4,
-        ease: [0.4, 0, 0.2, 1] // Smoother easing for nav items
+        ease: [0.4, 0, 0.2, 1]
       }
     },
     hover: {
@@ -101,11 +101,7 @@ const Header = () => {
       variants={navbarVariants}
       initial="initial"
       animate="animate"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200/50' 
-          : 'bg-white/90 backdrop-blur-sm'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-black shadow-lg`}
       style={{
         borderRadius: scrolled ? '0px' : '0 0 24px 24px',
       }}
@@ -122,7 +118,7 @@ const Header = () => {
                 className="flex items-center justify-center w-10 h-10 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 overflow-hidden"
                 whileHover={{ 
                   scale: 1.1,
-                  boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)"
+                  boxShadow: "0 0 20px rgba(255, 255, 255, 0.2)"
                 }}
                 transition={{ duration: 0.4, ease: "easeInOut" }}
               >
@@ -133,9 +129,9 @@ const Header = () => {
                 />
               </motion.div>
               <motion.span 
-                className="text-2xl font-bold text-black tracking-tight"
+                className="text-2xl font-bold text-white tracking-tight"
                 whileHover={{ 
-                  textShadow: "0 0 8px rgba(0, 0, 0, 0.3)"
+                  textShadow: "0 0 8px rgba(255, 255, 255, 0.3)"
                 }}
                 transition={{ duration: 0.3 }}
               >
@@ -159,20 +155,20 @@ const Header = () => {
                   to={item.path}
                   className={`relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 group ${
                     location.pathname === item.path
-                      ? 'text-black bg-gray-100 shadow-md'
-                      : 'text-gray-700 hover:text-black hover:bg-gray-50'
+                      ? 'text-white bg-gray-800 shadow-md'
+                      : 'text-gray-300 hover:text-white hover:bg-gray-700'
                   }`}
                 >
                   <span className="relative z-10">{item.name}</span>
                   {location.pathname === item.path && (
                     <motion.div
-                      className="absolute inset-0 bg-black/5 rounded-xl"
+                      className="absolute inset-0 bg-white/10 rounded-xl"
                       layoutId="activeTab"
                       transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
                     />
                   )}
                   <motion.div
-                    className="absolute inset-0 bg-gray-100 rounded-xl opacity-0 group-hover:opacity-100"
+                    className="absolute inset-0 bg-gray-700 rounded-xl opacity-0 group-hover:opacity-100"
                     transition={{ duration: 0.25, ease: "easeInOut" }}
                   />
                 </Link>
@@ -189,16 +185,13 @@ const Header = () => {
           >
             <Link
               to="/register"
-              className="bg-black text-white px-8 py-3 rounded-full text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2 border-2 border-transparent hover:border-gray-300"
-              style={{
-                background: 'linear-gradient(135deg, #000000 0%, #333333 100%)'
-              }}
+              className="bg-white text-black px-8 py-3 rounded-full text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2 border-2 border-transparent hover:border-gray-300"
             >
               <span>Register Now</span>
               <motion.div
                 animate={{ x: [0, 4, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                className="w-2 h-2 bg-white rounded-full"
+                className="w-2 h-2 bg-black rounded-full"
               />
             </Link>
           </motion.div>
@@ -206,7 +199,7 @@ const Header = () => {
           {/* Mobile menu button */}
           <motion.button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 rounded-xl hover:bg-gray-100 transition-colors duration-300"
+            className="lg:hidden p-2 rounded-xl hover:bg-gray-700 transition-colors duration-300"
             whileTap={{ scale: 0.95 }}
             whileHover={{ scale: 1.05 }}
           >
@@ -219,9 +212,9 @@ const Header = () => {
                 transition={{ duration: 0.25, ease: "easeInOut" }}
               >
                 {isMenuOpen ? (
-                  <X className="w-6 h-6 text-gray-700" />
+                  <X className="w-6 h-6 text-white" />
                 ) : (
-                  <Menu className="w-6 h-6 text-gray-700" />
+                  <Menu className="w-6 h-6 text-white" />
                 )}
               </motion.div>
             </AnimatePresence>
@@ -236,7 +229,7 @@ const Header = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-              className="lg:hidden py-4 border-t border-gray-200"
+              className="lg:hidden py-4 border-t border-gray-700 bg-black"
             >
               <nav className="flex flex-col space-y-3">
                 {navigation.map((item, index) => (
@@ -251,8 +244,8 @@ const Header = () => {
                       onClick={() => setIsMenuOpen(false)}
                       className={`block px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
                         location.pathname === item.path
-                          ? 'text-black bg-gray-100'
-                          : 'text-gray-700 hover:text-black hover:bg-gray-50'
+                          ? 'text-white bg-gray-800'
+                          : 'text-gray-300 hover:text-white hover:bg-gray-700'
                       }`}
                     >
                       {item.name}
@@ -267,7 +260,7 @@ const Header = () => {
                   <Link
                     to="/register"
                     onClick={() => setIsMenuOpen(false)}
-                    className="block bg-black text-white px-6 py-3 rounded-full text-sm font-semibold text-center mx-4 mt-4 shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="block bg-white text-black px-6 py-3 rounded-full text-sm font-semibold text-center mx-4 mt-4 shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     Register Now
                   </Link>
