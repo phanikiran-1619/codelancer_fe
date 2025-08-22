@@ -5,24 +5,63 @@ import DotsPattern from '../components/DotsPattern';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    phone: '', // Added phone field
-    subject: '',
-    message: ''
+    phone: '',
+    institution: '',
+    course: '',
+    year: '',
+    projectType: '',
+    timeline: '',
+    projectDescription: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission here
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('https://cl-backend-ro0d.onrender.com/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setShowNotification(true);
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          institution: '',
+          course: '',
+          year: '',
+          projectType: '',
+          timeline: '',
+          projectDescription: ''
+        });
+        setTimeout(() => setShowNotification(false), 5000);
+      } else {
+        console.error('Submission failed:', await response.text());
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -82,6 +121,19 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Notification */}
+      {showNotification && (
+        <motion.div
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -50 }}
+          className="fixed top-4 right-4 bg-green-500 text-white p-4 rounded-xl shadow-lg z-50"
+        >
+          <p className="font-semibold">Successfully sent!</p>
+          <p>Our team will connect with you soon.</p>
+        </motion.div>
+      )}
+
       {/* Hero Section */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white">
         <DotsPattern 
@@ -116,7 +168,6 @@ const Contact = () => {
           </motion.div>
         </div>
 
-        {/* Enhanced Floating Elements */}
         <motion.div 
           className="absolute top-20 left-10 w-20 h-20 bg-gray-300 rounded-full opacity-40"
           animate={{ 
@@ -231,18 +282,38 @@ const Contact = () => {
                   whileHover={{ y: -2 }}
                   whileFocus={{ y: -2, scale: 1.02 }}
                 >
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
                     <User className="w-4 h-4 inline mr-2" />
-                    Your Name
+                    First Name
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
+                    id="firstName"
+                    name="firstName"
+                    value={formData.firstName}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all duration-200 bg-white"
-                    placeholder="John Doe"
+                    placeholder="John"
+                    required
+                  />
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  whileFocus={{ y: -2, scale: 1.02 }}
+                >
+                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
+                    <User className="w-4 h-4 inline mr-2" />
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all duration-200 bg-white"
+                    placeholder="Doe"
                     required
                   />
                 </motion.div>
@@ -286,64 +357,158 @@ const Contact = () => {
                     required
                   />
                 </motion.div>
+
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  whileFocus={{ y: -2, scale: 1.02 }}
+                >
+                  <label htmlFor="institution" className="block text-sm font-medium text-gray-700 mb-2">
+                    Institution
+                  </label>
+                  <input
+                    type="text"
+                    id="institution"
+                    name="institution"
+                    value={formData.institution}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all duration-200 bg-white"
+                    placeholder="ABC University"
+                    required
+                  />
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  whileFocus={{ y: -2, scale: 1.02 }}
+                >
+                  <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-2">
+                    Course
+                  </label>
+                  <input
+                    type="text"
+                    id="course"
+                    name="course"
+                    value={formData.course}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all duration-200 bg-white"
+                    placeholder="B.Tech CSE"
+                    required
+                  />
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  whileFocus={{ y: -2, scale: 1.02 }}
+                >
+                  <label htmlFor="year" className="block text-sm font-medium text-gray-700 mb-2">
+                    Year
+                  </label>
+                  <select
+                    id="year"
+                    name="year"
+                    value={formData.year}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all duration-200 bg-white"
+                    required
+                  >
+                    <option value="">Select Year</option>
+                    <option value="First Year">First Year</option>
+                    <option value="Second Year">Second Year</option>
+                    <option value="Third Year">Third Year</option>
+                    <option value="Final Year">Final Year</option>
+                  </select>
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  whileFocus={{ y: -2, scale: 1.02 }}
+                >
+                  <label htmlFor="projectType" className="block text-sm font-medium text-gray-700 mb-2">
+                    Project Type
+                  </label>
+                  <select
+                    id="projectType"
+                    name="projectType"
+                    value={formData.projectType}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all duration-200 bg-white"
+                    required
+                  >
+                    <option value="">Select Project Type</option>
+                    <option value="AI & Machine Learning">AI & Machine Learning</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="Mobile Apps">Mobile Apps</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="IoT">IoT</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  whileFocus={{ y: -2, scale: 1.02 }}
+                >
+                  <label htmlFor="timeline" className="block text-sm font-medium text-gray-700 mb-2">
+                    Timeline
+                  </label>
+                  <select
+                    id="timeline"
+                    name="timeline"
+                    value={formData.timeline}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all duration-200 bg-white"
+                    required
+                  >
+                    <option value="">Select Timeline</option>
+                    <option value="1-2 months">1-2 months</option>
+                    <option value="3-4 months">3-4 months</option>
+                    <option value="5-6 months">5-6 months</option>
+                    <option value="More than 6 months">More than 6 months</option>
+                  </select>
+                </motion.div>
               </div>
 
               <motion.div
                 whileHover={{ y: -2 }}
                 whileFocus={{ y: -2, scale: 1.02 }}
               >
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                  <MessageSquare className="w-4 h-4 inline mr-2" />
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all duration-200 bg-white"
-                  placeholder="Project Development Inquiry"
-                  required
-                />
-              </motion.div>
-
-              <motion.div
-                whileHover={{ y: -2 }}
-                whileFocus={{ y: -2, scale: 1.02 }}
-              >
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Your Message
+                <label htmlFor="projectDescription" className="block text-sm font-medium text-gray-700 mb-2">
+                  Project Description
                 </label>
                 <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
+                  id="projectDescription"
+                  name="projectDescription"
+                  value={formData.projectDescription}
                   onChange={handleInputChange}
                   rows={5}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all duration-200 resize-none bg-white"
-                  placeholder="Tell us about your project requirements, timeline, and any specific questions you have..."
+                  placeholder="Describe your project requirements, timeline, and any specific questions you have..."
                   required
                 />
               </motion.div>
 
               <motion.button
                 type="submit"
+                disabled={isSubmitting}
                 whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)"
+                  scale: isSubmitting ? 1 : 1.05,
+                  boxShadow: isSubmitting ? "none" : "0 15px 30px rgba(0, 0, 0, 0.2)"
                 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full bg-black text-white py-4 px-8 rounded-xl font-semibold text-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-2"
+                whileTap={{ scale: isSubmitting ? 1 : 0.95 }}
+                className={`w-full py-4 px-8 rounded-xl font-semibold text-lg transition-all duration-300 flex items-center justify-center space-x-2 ${
+                  isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-black hover:shadow-xl'
+                } text-white`}
               >
                 <Send className="w-5 h-5" />
-                <span>Send Message</span>
-                <motion.div
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <ArrowRight className="w-5 h-5" />
-                </motion.div>
+                <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
+                {!isSubmitting && (
+                  <motion.div
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.div>
+                )}
               </motion.button>
             </form>
           </motion.div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { User, Mail, Phone, BookOpen, Code, GraduationCap, Calendar, ArrowRight, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { User, Mail, Phone, BookOpen, Code, GraduationCap, Calendar, ArrowRight, Sparkles, Loader2 } from 'lucide-react';
 import DotsPattern from '../components/DotsPattern';
 
 const Register = () => {
@@ -16,18 +16,101 @@ const Register = () => {
     projectDescription: '',
     timeline: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [modal, setModal] = useState({ isOpen: false, message: '', isError: false });
+  const [phoneError, setPhoneError] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    if (name === 'phone') {
+      const cleanedValue = value.replace(/[^0-9]/g, '').slice(0, 10);
+      setFormData({ ...formData, [name]: cleanedValue });
+      if (cleanedValue.length !== 10) {
+        setPhoneError('Phone number must be exactly 10 digits');
+      } else {
+        setPhoneError('');
+      }
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handlePhoneKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+    if (!/[0-9]/.test(e.key) && !allowedKeys.includes(e.key)) {
+      e.preventDefault();
+    }
+  };
+
+  const validateForm = () => {
+    if (!/^[0-9]{10}$/.test(formData.phone)) {
+      setPhoneError('Phone number must be exactly 10 digits');
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Registration form submitted:', formData);
-    // Handle form submission here
+    if (!validateForm()) {
+      setModal({
+        isOpen: true,
+        message: 'Please enter a valid 10-digit phone number.',
+        isError: true
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('https://cl-backend-ro0d.onrender.com/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setModal({
+          isOpen: true,
+          message: 'Registration successful! Our team will connect with you soon.',
+          isError: false
+        });
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          institution: '',
+          course: '',
+          year: '',
+          projectType: '',
+          projectDescription: '',
+          timeline: ''
+        });
+        setPhoneError('');
+      } else {
+        setModal({
+          isOpen: true,
+          message: 'Server error. Please try again or contact support.',
+          isError: true
+        });
+      }
+    } catch (error) {
+      setModal({
+        isOpen: true,
+        message: 'Network error. Please check your connection and try again.',
+        isError: true
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const closeModal = () => {
+    setModal({ isOpen: false, message: '', isError: false });
   };
 
   const projectTypes = [
@@ -71,8 +154,46 @@ const Register = () => {
     }
   };
 
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
+    exit: { opacity: 0, scale: 0.8, transition: { duration: 0.2 } }
+  };
+
   return (
     <div className="min-h-screen bg-white">
+      {/* Modal */}
+      <AnimatePresence>
+        {modal.isOpen && (
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className={`bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-xl border ${modal.isError ? 'border-red-200' : 'border-green-200'}`}
+            >
+              <p className={`text-lg font-semibold text-center ${modal.isError ? 'text-red-600' : 'text-green-600'}`}>
+                {modal.message}
+              </p>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={closeModal}
+                className="mt-4 w-full bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-900 transition-all duration-200"
+              >
+                Close
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Hero Section */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white">
         <DotsPattern 
@@ -156,7 +277,6 @@ const Register = () => {
           </motion.div>
         </div>
 
-        {/* Enhanced Floating Elements */}
         <motion.div 
           className="absolute top-20 left-10 w-20 h-20 bg-gray-300 rounded-full opacity-40"
           animate={{ 
@@ -283,15 +403,23 @@ const Register = () => {
                       Phone Number *
                     </label>
                     <input
-                      type="tel"
+                      type="text"
                       id="phone"
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all duration-200"
-                      placeholder="+91 12345 67890"
+                      onKeyDown={handlePhoneKeyDown}
+                      pattern="[0-9]{10}"
+                      maxLength={10}
+                      className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all duration-200 ${
+                        phoneError ? 'border-red-400' : 'border-gray-200'
+                      }`}
+                      placeholder="1234567890"
                       required
                     />
+                    {phoneError && (
+                      <p className="text-red-500 text-sm mt-1">{phoneError}</p>
+                    )}
                   </motion.div>
                 </div>
               </div>
@@ -428,19 +556,43 @@ const Register = () => {
               <motion.button
                 type="submit"
                 whileHover={{ 
-                  scale: 1.02,
-                  boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)"
+                  scale: 1.05,
+                  boxShadow: "0 15px 30px rgba(0, 0, 0, 0.3)"
                 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-black text-white py-4 px-8 rounded-xl font-semibold text-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-2"
+                whileTap={{ scale: 0.95 }}
+                animate={{
+                  scale: isSubmitting ? 1 : [1, 1.03, 1],
+                  boxShadow: isSubmitting ? "0 15px 30px rgba(0, 0, 0, 0.2)" : [
+                    "0 5px 15px rgba(0, 0, 0, 0.1)",
+                    "0 10px 20px rgba(0, 0, 0, 0.2)",
+                    "0 5px 15px rgba(0, 0, 0, 0.1)"
+                  ]
+                }}
+                transition={{
+                  scale: { duration: 0.2 },
+                  boxShadow: { duration: 2, repeat: isSubmitting ? 0 : Infinity }
+                }}
+                disabled={isSubmitting}
+                className={`w-full py-4 px-8 rounded-xl font-semibold text-lg transition-all duration-300 flex items-center justify-center space-x-2 ${
+                  isSubmitting ? 'bg-gray-400 text-gray-200 cursor-not-allowed' : 'bg-black text-white'
+                }`}
               >
-                <span>Start Your Project Journey</span>
-                <motion.div
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <ArrowRight className="w-5 h-5" />
-                </motion.div>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Submitting...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Start Your Project Journey</span>
+                    <motion.div
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      <ArrowRight className="w-5 h-5" />
+                    </motion.div>
+                  </>
+                )}
               </motion.button>
             </form>
           </motion.div>

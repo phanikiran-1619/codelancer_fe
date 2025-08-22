@@ -41,14 +41,14 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               {[
-                { icon: Facebook, color: "hover:text-blue-400" },
-                { icon: Twitter, color: "hover:text-cyan-400" },
-                { icon: Linkedin, color: "hover:text-blue-400" },
-                { icon: Instagram, color: "hover:text-pink-400" }
-              ].map(({ icon: Icon, color }, index) => (
+                { icon: Facebook, color: "hover:text-blue-400", href: "#" },
+                { icon: Twitter, color: "hover:text-cyan-400", href: "#" },
+                { icon: Linkedin, color: "hover:text-blue-400", href: "#" },
+                { icon: Instagram, color: "hover:text-pink-400", href: "https://www.instagram.com/the.codelancer/?utm_source=ig_web_button_share_sheet" }
+              ].map(({ icon: Icon, color, href }, index) => (
                 <motion.a 
                   key={index}
-                  href="#" 
+                  href={href} 
                   className={`text-gray-400 ${color} transition-colors duration-300`}
                   whileHover={{ scale: 1.2, y: -2 }}
                   whileTap={{ scale: 0.9 }}
@@ -126,9 +126,9 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4 text-white">Contact Info</h3>
             <div className="space-y-3">
               {[
-                { icon: Mail, text: "dheerajdonepudi18@gmail.com", color: "text-blue-400" },
+                { icon: Mail, text: "infocodelancer@gmail.com", color: "text-blue-400" },
                 { icon: Phone, text: "+91 8143965686", color: "text-green-400" },
-                { icon: MapPin, text: "Vijayawada, Andhra Pradesh, India", color: "text-red-400" }
+                { icon: MapPin, text: " Bengaluru,Karnataka,India", color: "text-red-400" }
               ].map(({ icon: Icon, text, color }, index) => (
                 <motion.div 
                   key={index}
